@@ -4,7 +4,7 @@ To be able to both properly detect and track fish an evaluation of the state of 
 
 The chapter also presents setup and utility considerations.
 
-\section{Fish Detection}
+\section{Fish Detection and Tracking}
 As stated in \autoref{sec:loligo_res} Loligo Systems extracts BLOBs from a binary image to detect the fish in an aquarium. Using the binary image with noise reduction resembles a background subtraction, as the detector has a clear distinction between objects and empty space.
 
 Background subtraction is a common detection technique for vision applications due to the separation between wanted objects and the rest of the scene in an image. A tracker which uses this is idTracker.
@@ -12,15 +12,27 @@ Background subtraction is a common detection technique for vision applications d
 Another implementation of fish tracking is to separate each fish by determining the direction in which each fish is moving by determining where the head and tail of the fish is by splitting the body of the fish into rectangles.
 
 \subsection{idTracker}
-The tracker is able to track up to 20 objects in a scene from a video sequence by annotating specific fingerprints to each object and ID'ing it that way.
+The tracker is able to track up to 20 objects in a scene from a video sequence by annotating specific fingerprints to each object and ID'ing it that way \citep{idtracker2014}.
 
+\subsubsection{Detection}
 Firstly each image from the video feed is normalised to its mean intensity, in which BLOBs with a mean pixel intensity outside of the set threshold are extracted. An optional background subtraction is possible using an average background image computed from the entire video.
 
-The identification is done by comparing each BLOB extracted with reference images and compute the probability of a specific BLOB to belong to the correct ID.
+The identification is done by comparing each BLOB extracted with reference images and compute the probability of a specific BLOB belonging to the correct ID.
+
+\subsubsection{Tracking}
+The tracking is done while detecting as any frame without any type of occlusion or collision are stored and used for tracking while the occlusions are handled. The saved frames are also used as references during occlusion handling. The trajectories are created using the coordinates extracted from the detection.
 
 \subsection{Rectangle Body Modelling}
-According to [the author]\todo{insert sources when mendely is synced} the fish body is split into 8 rectangles with the same length but decreasing width to match the curvature of the fish body going from head to tail.
+According to \cite{HongWang2016} the fish body is split into 8 rectangles with the same length but decreasing width to match the curvature of the fish body going from head to tail. \autoref{fig:rect-flow} shows a flow diagram of the detection and tracking process. The solution relies on the head region of fish is somewhat rigid when using a top-view.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{rect-flow}
+	\caption{Flow diagram of the rectangle body modelling fish tracking \citep{HongWang2016}}
+	\label{fig:rect-flow}
+\end{figure}
+
+\subsubsection{Detection}
 The implementation firstly makes a background subtraction with a background image made in the same way as from idTracker. And then converted to a binary image by using a threshold. From there the boundary of each fish is extracted.
 
 The curvature of the fish body is computed along with detection of the nose point of the fish. by locating the two local maximums on the fish; one on the nose of the fish, which is the lower one, and one on the tail.
@@ -32,8 +44,15 @@ Pose estimation of the fish is done based on rectangle chain fitting. Each recta
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{rect-fish}
-  \caption{Example of rectangles covering the fish to define shape}
+  \caption{Example of rectangles covering the fish to define shape \citep{HongWang2016}}
   \label{fig:rect-fish}
 \end{figure}
 
-\section{Fish Tracking}
+\subsubsection{Tracking}
+As previously mentioned, the solution is based on the head region of the fish being somewhat rigid. When tracking, \cite{HongWang2016} firstly tracks the head of the fish using a Kalman filter. 
+
+Data association is securing one tracker is associated with only one measurement. \cite{HongWang2016} formulates this as a global optimisation problem and employs the Hungarian algorithm to solve the problem.
+
+When the head location and orientation is found the rectangle chain fitting is done as described previously. If the eight rectangles cover less than $80\%$ in a frame, the tracker is terminated, which can lead to trajectories being split, needing tracklets re-linking.
+
+The re-linking is classified as a minimum cost maximum flow problem to solve re-linking to handle potential occlusions.
