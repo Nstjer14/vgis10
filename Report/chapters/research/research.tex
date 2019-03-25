@@ -3,7 +3,7 @@
 \label{cha:research}
 To be able to further develop on the tracking system presented in the \nameref{ch:intro}, background research and system analysis is necessary. In this chapter, the existing Loligo Systems solution LoliTrack is presented as well as the company it self, together with the an overview of tasks to solved for 3D tracking implementation. A further state of the art solutions is presented in \autoref{ch:analysis}.
 
-\section{Loligo Systems}
+\section{Loligo Systems}\label{sec:loligo_res}
 Loligo Systems is a company who specialise in aquatic biology research, animal physiology, and  behavioural research equipment. The equipment mainly consist of animal chambers, flumes, sensors, instruments and software for automated oxygen consumption measurements, and equipment for video-based tracking and analysis of animal behaviour. Examples of product are shown in \autoref{fig:loliproducts}.
 
 \begin{figure}[H]
@@ -60,7 +60,7 @@ In computer vision multiple approaches to detect an object exist. The suitable a
 
 In every scenario, a detection application is an image processing task aimed at detecting the desired objects in an image while refraining from creating false positives. The output should the be at least x-, y-coordinates and a frame number for every detection.
 
-Existing solutions of detection are presented in \autoref{ch:analysis}. 
+Existing solutions of detection are presented in \autoref{ch:analysis}.
 
 \section{Fish Tracking}
 When tracking in two dimensional space, a simple solution is generating tracks by associating the detections made in each frame and minimising the travel distance of the fish in the successive frames.

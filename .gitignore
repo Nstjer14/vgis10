@@ -252,4 +252,4 @@ AAUsimpletheme.pdf
 *.pyc
 *.h5
 
-/pdfs/*.pdf
+/pdfs/
