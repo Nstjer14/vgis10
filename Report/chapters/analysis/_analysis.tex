@@ -77,8 +77,20 @@ Ellipse fitting is done to be able to locate the head of a fish properly, as an 
 Should a duplicate detection occur, meaning having two detections in one head region, an angle constraint is used. If the angle between the two detections is higher than $30 \degree$ the detection with the higher contrast is kept as the head.
 
 \subsubsection{Tracking}
+When detection is finished, each target is tracked. \cite{Qian2014} splits the tracking in three parts: motion prediction, feature matching, and trajectory linking.
 
+The motion prediction is done using a Kalman filter to predict the motion state from the state vector: $ x_k = (x,y,v_x,v_y) $, where $x$ and $y$ are the head point coordinates and $v_x$ and $ v_y $ are the speeds in the speeds in their respective directions. As the fish can move very sporadic, a constant velocity model can lead to errors. To account for this plausible error \cite{Qian2014} implements a compensation window prescribing the detected ellipse's direction inside a quarter circle.
 
+The feature matching is based on the head region of the fish using width, area, and greyscale information, which limits the solution to a low water setup, as the vertical swimming possibilities are very limited for the fish, limiting the size variations of the fish. The width is found by contouring the fish and drawing a line perpendicular to the direction vector from the ellipse centre and measuring the length of that line. The area used, is the entire matching region used. Greyscale matching is based on a histogram of the matching region. An example of the motion prediction compensation window and feature matching region is shown in \autoref{fig:head_det_track}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{head_det_track}
+	\caption{Example of the motion prediction compensation window and feature matching region \citep{Qian2014}}
+	\label{fig:head_det_track}
+\end{figure}
+
+Trajectory linking is done to check if two trajectory fragments belong together. If the two fragments meets both the time constraint and the space constraint made, feature matching is done on both fragments to further determine if the two fragments should be linked, as belonging to one fish.
 
 \section{Data Acquirement}
 In order to do tracking of the fish, data needs to be sampled. This is done in cooperation with Loligo Systems at their offices in Viborg, Denmark.
