@@ -1,6 +1,8 @@
 \graphicspath{{figures/design/}}
 \chapter{Design}\label{ch:design}
-This chapter gives an in-depth description of how implementations are made. \todo{More intro}
+Based on the acquired knowledge from \autoref{ch:research} and \autoref{ch:analysis} a design of an occlusion detection solution is made. This is implemented using Python3 and mainly OpenCV solutions paired with other image processing implementations.
+
+This chapter gives an in-depth description of how the implementations are made and the theory behind them.
 
 \section{Preprocessing}
 To be able to do object detection, image preprocessing is necessary. Because fo the high contrast between the background and the fish due to the \gls{nir} background lighting, background subtraction is not necessary. 
@@ -104,7 +106,28 @@ By tagging pixels, the algorithm keeps track on which category or BLOB the pixel
 	\label{fig:connectiv}
 \end{figure}
 
-When a contour of a BLOB is fully connected, it is tagged as a surface $ S $. The contour marked is the outermost 1-pixels of each BLOB.
+When a contour of a BLOB is fully connected, it is tagged as a surface $ S $. The contour marked is the outermost 1-pixels of each BLOB. An example of contouring with the different threshold values presented earlier i shown in \autoref{fig:contour}. This also shows the importance of thresholding at the right value for different implementations.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{contour35.png}
+		\caption{Contour drawn around BLOBs with threshold at a pixel value of 35}
+		\label{fig:thresh35}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{contour50.png}
+		\caption{Contour drawn around BLOBs with threshold at a pixel value of 50}
+		\label{fig:thresh50}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{contour70.png}
+		\caption{Contour drawn around BLOBs with threshold at a pixel value of 70}
+		\label{fig:thresh70}
+	\end{subfigure}
+	\caption{Contours drawn around BLOBs with different threshold levels}
+	\label{fig:contour}
+\end{figure}
 
 \subsection{Skeletonisation}
 To gather some characteristics of each BLOB, a skeletonisation is done on each image. With this information, it is possible to find both simpler coordinates of each BLOB instead of a contour, but the skeleton can also show characteristics of a BLOB consisting of two fish or more if they are not straight on top of each other.
@@ -176,3 +199,45 @@ An occlusion is defined as two fish or more covering one another which will decr
 
 \subsection{Contour Counting}
 As the BLOB contour implementation counts the amount of contours present in each frame of the video, it is possible to detect if there are enough BLOBs in the image to correspond to the amount of fish in the aquarium.
+
+The location of the BLOB containing the occlusion is still unknown. When having only three fish in the aquarium, a solution to this problem is finding the largest BLOB in the image.\\
+
+By using OpenCV, the area of a contour is found using the Green Formula. The area is found by using \textit{moments} also presented in the OpenCV package. By integrating over the points of a curve  surrounding a surface the area is found. The equation is shown in \autoref{eq:green_formula} \citep{Weisstein}.
+
+\begin{equation}\label{eq:green_formula}
+	A=\oint_{C}\left(Ldx+Mdy\right)
+\end{equation}
+
+The contour counting is used as the second stage occlusion detection, as the skeletonisation is able to locate the specific point of occlusion if the skeleton has a branching in the spines extracted.
+
+\subsection{Skeleton Intersection}
+With the skeletons extracted from each BLOB in the image, it is possible to extract positions of the spine of each fish, but also possible to recognise an occurrence of a spine branching into two parts, which can indicate an occlusion occurring.\\
+
+The intersections are found by iterating through each skeleton point in the image and checking for the amount of neighbours each pixel has. If there is more than two pixels as neighbours, the pixel is marked as a splitting point. This is done with 8-connectivity, meaning all neighbours of each point is checked. An example of the intersection detection is shown in \autoref{fig:int_det}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{int_det}
+	\caption{Intersection detected between two fish crossing each other. The image is cut to show only the important information}
+	\label{fig:int_det}
+\end{figure}
+
+The intersection solution is prone to failing if two fish or more are almost exactly on top on each other, as this will create only one spine of the two fish, without any breaks or branching out. Another issue is if a fish is elongating another fish, which also leads to a single long spine. Both issues are shown in \autoref{fig:int_det_fail}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{int_det_fail_ontop}
+		\caption{Intersection not detected between two fish crossing each other. }
+		\label{fig:int_det_fail_ontop}
+	\end{subfigure}
+~
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{int_det_fail_elong}
+		\caption{Intersection not detected between two fish elongating each other. }
+		\label{fig:int_det_fail_elong}
+	\end{subfigure}
+	\caption{Intersection detection caveats in which it fails to detec intersection. The images are cut to show only the important information}
+	\label{fig:int_det_fail}
+\end{figure}
+
