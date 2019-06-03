@@ -95,4 +95,23 @@ Trajectory linking is done to check if two trajectory fragments belong together.
 \section{Data Acquirement}
 In order to do tracking of the fish, data needs to be sampled. This is done in cooperation with Loligo Systems at their offices in Viborg, Denmark.
 
-The cameras used are two identical iDS UI-3370CP Rev. 2 cameras, able to record at $80$ frames per second at full resolution of $ 2048\times2048 $ pixels. The camera is fitted with a Kowa LM25HC lens to be able to adjust optical zoom and focus. 
+\subsection{Recording Set-up}
+The cameras used are two identical iDS UI-3370CP Rev. 2 cameras, able to record at $80$ frames per second at full resolution of $ 2048\times2048 $ pixels. The camera is fitted with a Kowa LM25HC lens to be able to adjust optical zoom and focus. The higher the resolution of the camera, the lower amount of frames it is able to record. Recording in full high definition of $1920 \times 1080$ yields $50$ frames per second, which enables the camera to capture a lot of the fish's sporadic movements.
+
+When recording to achieve a stereo vision, the cameras are placed at the same distance from the centre point of the aquarium to opposite sides. Both cameras are placed above the aquarium at the same height. An overview example of the set-up is shown in \autoref{fig:cam_setup}. The figure also includes the set up when using only one camera. In this instance, the camera is centred over the aquarium and placed at a height in which all the water in the camera is captured. 
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.4\textwidth}
+		\includegraphics[width=\textwidth]{single_setup}
+		\caption{Set up of video capture using a single camera centred above the aquarium}
+		\label{fig:single_setup}
+	\end{subfigure}
+	\begin{subfigure}{0.4\textwidth}
+		\includegraphics[width=\textwidth]{duo_setup}
+		\caption{Set up of stereo video capture using two cameras offset equally from the centre of the aquarium}
+		\label{fig:duo_setup}
+	\end{subfigure}
+\caption{The two set ups used to capture video data of the fish}
+\label{fig:cam_setup}
+\end{figure}

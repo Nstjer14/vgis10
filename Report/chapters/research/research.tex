@@ -1,7 +1,7 @@
 \graphicspath{{figures/research/}}
 \chapter{Background Research}\glsresetall
 \label{cha:research}
-To be able to further develop on the tracking system presented in the \nameref{ch:intro}, background research and system analysis is necessary. In this chapter, the existing Loligo Systems solution LoliTrack is presented as well as the company it self, together with the an overview of tasks to solved for 3D tracking implementation. A further state of the art solutions is presented in \autoref{ch:analysis}.
+To be able to further develop on the tracking system presented in the \nameref{ch:intro}, background research and system analysis is necessary. In this chapter, the existing Loligo Systems solution LoliTrack is presented as well as the company it self, together with the an overview of tasks to be solved for 3D tracking implementation. A further state of the art solutions is presented in \autoref{ch:analysis}.
 
 \section{Loligo Systems}\label{sec:loligo_res}
 Loligo Systems is a company who specialise in aquatic biology research, animal physiology, and  behavioural research equipment. The equipment mainly consist of animal chambers, flumes, sensors, instruments and software for automated oxygen consumption measurements, and equipment for video-based tracking and analysis of animal behaviour. Examples of product are shown in \autoref{fig:loliproducts}.
@@ -51,9 +51,6 @@ According to Loligo Systems the detection and tracking is done in six steps:
 	\item Every blob is fitted with a two-dimensional Gaussian distribution to the values of the pixel values given.
 	\item Step 1-4 is repeated for every frame. Afterwards expectations maximisation is used dependent on the previous frames.
 \end{enumerate}
-
-\subsection{New LoliTrack Setup}
-IDS NIR cameras - NIR backlit aquarium - high contrast between fish an background - undetectable water
 
 \section{Fish Detection}
 In computer vision multiple approaches to detect an object exist. The suitable approach depends on the application area and is done both using regular machine learning but also deep learning.
