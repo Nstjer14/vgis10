@@ -4,7 +4,7 @@ To be able to both properly detect and track fish an evaluation of the state of 
 
 The chapter also presents setup and utility considerations.
 
-\section{Fish Detection and Tracking}
+\section{Fish Detection and Tracking}\label{sec:det_track}
 As stated in \autoref{sec:loligo_res} Loligo Systems extracts BLOBs from a binary image to detect the fish in an aquarium. Using the binary image with noise reduction resembles a background subtraction, as the detector has a clear distinction between objects and empty space.
 
 Background subtraction is a common detection technique for vision applications due to the separation between wanted objects and the rest of the scene in an image. A tracker which uses this is idTracker.
@@ -115,3 +115,10 @@ When recording to achieve a stereo vision, the cameras are placed at the same di
 \caption{The two set ups used to capture video data of the fish}
 \label{fig:cam_setup}
 \end{figure}
+
+\section{Delimitations}
+Due to time constraints, it was chosen to focus on 2D-tracking instead of 3D-tracking. Furthermore, to be able to implement a 3D-tracking system to match Loligo System's aim, the system had to be robust to multiple different types of shapes. Due to this, a robust 2D-tracking implementation was needed before any 3D-tracking could be implemented, as a 3D solution in theory is a 2D-tracking used with two cameras and combining the acquired data from the two cameras.
+
+As presented in \autoref{sec:det_track} there exist multiple detection and tracking algorithms for 2D. Due to the multiple tracking solutions existing, it is chosen to focus on a solution able to detect whether an occlusion is occurring.\\
+
+With this a problem statement is made in the following chapter.
