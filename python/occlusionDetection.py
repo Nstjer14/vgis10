@@ -13,9 +13,9 @@ from skimage.morphology import skeletonize_3d, skeletonize
 from matplotlib import pyplot as plt
 import csv
 
-vidPath = '../videos/Narrow-3f-bg-50fps_Trim.avi'
-contPath = 'contours/contours_3f.csv'
-intPath = 'intersections/intersections_3f.csv'
+vidPath = '../../videos/Narrow-5f-bg-50fps.avi'
+contPath = 'contours/contours_5f.csv'
+intPath = 'intersections/intersections_5f.csv'
 vidObj = cv2.VideoCapture(vidPath)
 
 def preProcess(image):
@@ -40,16 +40,16 @@ def findNeighbours(x,y,img):
 
 def getSkeletonIntersection(skeleton):
     """ Given a skeletonised image, it will give the coordinates of the intersections of the skeleton.
-    
+
     Keyword arguments:
     skeleton -- the skeletonised image to detect the intersections of
-    
-    Returns: 
+
+    Returns:
     List of 2-tuples (x,y) containing the intersection coordinates
     """
     # A biiiiiig list of valid intersections             2 3 4
     # These are in the format shown to the right         1 C 5
-    #                                                    8 7 6 
+    #                                                    8 7 6
     validIntersection = [[0,1,0,1,0,0,1,0],[0,0,1,0,1,0,0,1],[1,0,0,1,0,1,0,0],
                          [0,1,0,0,1,0,1,0],[0,0,1,0,0,1,0,1],[1,0,0,1,0,0,1,0],
                          [0,1,0,0,1,0,0,1],[1,0,1,0,0,1,0,0],[0,1,0,0,0,1,0,1],
@@ -92,7 +92,7 @@ vidObj = cv2.VideoCapture(vidPath)
 count = 0
 positions = []
 countInts = 0
-for i in range(100): positions.append((0,0))
+for i in range(3000): positions.append((0,0))
 
 while True:
     ret, frame = vidObj.read()
@@ -100,8 +100,8 @@ while True:
         break
     #Using preProcess to extract greyscale and binary images
     img, binImg = preProcess(frame)
-    
-    
+
+
     #getting skeleton from the binary image
     skeleton = skeletonize(binImg)
     rows = len(skeleton[1])
@@ -110,29 +110,31 @@ while True:
         for j in range(rows):
             if skeleton[i][j] == 1:
                 cv2.circle(img, (j,i), 0, (0, 255, 0), -2)
-  
-    #finding intersections from the skeleton. Looking 
+
+    #finding intersections from the skeleton. Looking
     #for any valid intersection between two fish spines.
     intersections = getSkeletonIntersection(skeleton)
     for h in intersections:
         print(h[0],h[1])
-    #append intersection coordinates 
+    #append intersection coordinates
     #together with frame number
     if len(intersections) > 0:
         countInts += 1
         for k in intersections:
             positions[count] = (k[0],k[1])
-    
+
+    print('frame: ', count)
     count += 1
-'''   
+
+'''
 
     cv2.imshow('video',img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 '''
-    
+
 vidObj.release()
-cv2.destroyAllWindows() 
+cv2.destroyAllWindows()
 print('Finished')
 posCount = 0
 g = 0
@@ -146,6 +148,6 @@ with open(intPath, 'w', newline="") as csvfile:
         #x, y = position[0], position[1]
         #writer.writerow({'x_position': x, 'y_position': y})
         #g += 1
-                    
+
 print('finished writing data')
 print(intPath)
