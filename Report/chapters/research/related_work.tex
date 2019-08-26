@@ -13,7 +13,7 @@ When dealing with lower resolution video \cite{Dolado2015} uses a background sub
 
 Similar to \cite{Dolado2015}, \cite{Rodriguez2017} uses a threshold to segment the fish \gls{blob}s from the background image. A size filter is also applied to remove noise and unwanted false positives. Due to the higher resolution data, more information is added to every detection. A square, denoted as a \gls{roi} is drawn around each \gls{blob} and the area is used to generate further information about the \gls{blob}. The information consists of the centre of mass position, the pixel size of the \gls{blob}, a histogram of the \gls{roi} and the time of detection. The information also includes Hu's Seven Moments Invariants, which are used to characterise patterns in images and can be used to identify rigid and moving objects regardless of orientation in the image \citep{Rodriguez2017}.\\
 
-\gls{idtracker2014} uses a background subtraction which is calculated from the average image of the whole video used for input.
+\cite{idtracker2014} uses a background subtraction which is calculated from the average image of the whole video used for input. As in the other solutions, a threshold is set to segment the \gls{blob}s from the background. To be able to identify each fish in the image, \cite{idtracker2014} collects a set of images of each individual \gls{blob} in the arena. When operating on the video the reference images collected are used to be able to identify each unique \gls{blob} in the image \citep{idtracker2014}.
 
 
 Write about the  different detection methods used in state of the art solutions
