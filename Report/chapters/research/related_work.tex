@@ -1,0 +1,34 @@
+\graphicspath{{figures/research/}}
+\chapter{Related Work}\label{ch:related}
+As stated in \autoref{ch:intro}, tracking is dine in multiple different ways and so is the handling of occlusions. The different tracking solutions also enables different approaches to handling the occlusions.
+
+The chapter will focus mainly on solutions which aspire to handle the occlusions in some way, as these may yield the most information towards developing a solution in the project.
+
+\section{Detection}
+Before doing any kind of tracking of the fish in the aquarium, a detection of every object is necessary to be able to gather the required information for tracking. The detection often relies on a high contrast between the desired objects and the background, making the BLOB extraction more simple. The detection step will be defined as the operations made on each frame in a video producing the coordinate of the fish which is then tracked in the following step.
+
+According to \cite{Delcourt2018} the detection methods used by multiple different solutions can be dependent on the resolution of the image. Due to identification solutions relying on colour difference between the objects, high resolution images are necessary to be able to properly differentiate between the objects \citep{idtracker2014, Feijo2018}, as the high resolution often leads to each fish being made up of more pixels than in the low resolution images.
+
+When dealing with lower resolution video \cite{Dolado2015} uses a background subtraction from the original image to remove noise in the image. Afterwards a median filter is used to preserve edges and remove the semi-transparent fins of the fish. Lastly segmentation is done converting the image from greyscale to binary using a threshold. Meanwhile, a filter sorts out \gls{blob}s deemed too small to be fish using a size threshold \citep{Dolado2015}.\\
+
+Similar to \cite{Dolado2015}, \cite{Rodriguez2017} uses a threshold to segment the fish \gls{blob}s from the background image. A size filter is also applied to remove noise and unwanted false positives. Due to the higher resolution data, more information is added to every detection. A square, denoted as a \gls{roi} is drawn around each \gls{blob} and the area is used to generate further information about the \gls{blob}. The information consists of the centre of mass position, the pixel size of the \gls{blob}, a histogram of the \gls{roi} and the time of detection. The information also includes Hu's Seven Moments Invariants, which are used to characterise patterns in images and can be used to identify rigid and moving objects regardless of orientation in the image \citep{Rodriguez2017}.\\
+
+\gls{idtracker2014} uses a background subtraction which is calculated from the average image of the whole video used for input.
+
+
+Write about the  different detection methods used in state of the art solutions
+
+
+\section{Tracking}
+The low resolution pre processing solution made by \cite{Dolado2015} uses an already commercial tracking solution called \textit{Image-Pro Plus} to track the fish.
+
+
+Different tracking solutions, how many use the same solution
+
+\section{Occlusion Handling}
+\cite{Dolado2015} uses a single image solution to handle occurring occlusions. They have categorised occlusions into two different types, with two different solutions. By defining a size threshold larger than the observed size of one fish, the \gls{blob}s consisting of two fish or more are segmented in the image. The two different categories of occlusions are an elongation of the fish, making one long \gls{blob}. The other category is when the fish either cross or create a T-like shape \citep{Dolado2015}.
+
+The elongation is handled by eroding the image and then dilating to just before the two \gls{blob}s connect to create only one. To handle the crossing, resulting in an X- or T-shape, an ellipse fitting is made around the \gls{blob} and it is then separated by the shortest axis of the ellipse \citep{Dolado2015}.
+
+
+How is occlusions handled? Are they even handled? Is there a solution other than Kalman filter to estimate previous position?
