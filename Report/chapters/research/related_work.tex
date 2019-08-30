@@ -5,30 +5,54 @@ As stated in \autoref{ch:intro}, tracking is dine in multiple different ways and
 The chapter will focus mainly on solutions which aspire to handle the occlusions in some way, as these may yield the most information towards developing a solution in the project.
 
 \section{Detection}
-Before doing any kind of tracking of the fish in the aquarium, a detection of every object is necessary to be able to gather the required information for tracking. The detection often relies on a high contrast between the desired objects and the background, making the BLOB extraction more simple. The detection step will be defined as the operations made on each frame in a video producing the coordinate of the fish which is then tracked in the following step.
+Before doing any kind of tracking of the fish in the aquarium, a detection of every object is necessary to be able to gather the required information for tracking. The detection often relies on a high contrast between the desired objects and the background, making the BLOB extraction more simple \citep{Delcourt2018}. The detection step will be defined as the operations made on each frame in a video producing the coordinate of the fish which is then tracked in the following step.\\
 
-According to \cite{Delcourt2018} the detection methods used by multiple different solutions can be dependent on the resolution of the image. Due to identification solutions relying on colour difference between the objects, high resolution images are necessary to be able to properly differentiate between the objects \citep{idtracker2014, Feijo2018}, as the high resolution often leads to each fish being made up of more pixels than in the low resolution images.
+According to \cite{Delcourt2018} the detection methods used by multiple different solutions can be dependent on the resolution of the image. Due to identification solutions relying on colour difference between the objects, high resolution images are necessary to be able to properly differentiate between the objects \citep{idtracker2014, Feijo2018, Romero-Ferrero2019}, as the high resolution often leads to each fish being made up of more pixels than in the low resolution images.
 
-When dealing with lower resolution video \cite{Dolado2015} uses a background subtraction from the original image to remove noise in the image. Afterwards a median filter is used to preserve edges and remove the semi-transparent fins of the fish. Lastly segmentation is done converting the image from greyscale to binary using a threshold. Meanwhile, a filter sorts out \gls{blob}s deemed too small to be fish using a size threshold \citep{Dolado2015}.\\
+When dealing with lower resolution video \cite{Dolado2015} uses a background subtraction from the original image to remove noise in the image. Afterwards a median filter is used to preserve edges and remove the semi-transparent fins of the fish. Lastly segmentation is done converting the image from greyscale to binary using a threshold. Meanwhile, a filter sorts out \gls{blob}s deemed too small to be fish using a size threshold \citep{Dolado2015}.
 
-Similar to \cite{Dolado2015}, \cite{Rodriguez2017} uses a threshold to segment the fish \gls{blob}s from the background image. A size filter is also applied to remove noise and unwanted false positives. Due to the higher resolution data, more information is added to every detection. A square, denoted as a \gls{roi} is drawn around each \gls{blob} and the area is used to generate further information about the \gls{blob}. The information consists of the centre of mass position, the pixel size of the \gls{blob}, a histogram of the \gls{roi} and the time of detection. The information also includes Hu's Seven Moments Invariants, which are used to characterise patterns in images and can be used to identify rigid and moving objects regardless of orientation in the image \citep{Rodriguez2017}.\\
+Similar to \cite{Dolado2015}, \cite{Rodriguez2017} uses a threshold to segment the fish \gls{blob}s from the background image. A size filter is also applied to remove noise and unwanted false positives. Due to the higher resolution data, more information is added to every detection. A square, denoted as a \gls{roi} is drawn around each \gls{blob} and the area is used to generate further information about the \gls{blob}. The information consists of the centre of mass position, the pixel size of the \gls{blob}, a histogram of the \gls{roi} and the time of detection. The information also includes Hu's Seven Moments Invariants, which are used to characterise patterns in images and can be used to identify rigid and moving objects regardless of orientation in the image \citep{Rodriguez2017}.
 
 \cite{idtracker2014} uses a background subtraction which is calculated from the average image of the whole video used for input. As in the other solutions, a threshold is set to segment the \gls{blob}s from the background. To be able to identify each fish in the image, \cite{idtracker2014} collects a set of images of each individual \gls{blob} in the arena. When operating on the video the reference images collected are used to be able to identify each unique \gls{blob} in the image \citep{idtracker2014}.
 
+\cite{Wang2017} and \cite{Pedersen2017} uses head detection of the fish relying on \gls{doh} in scale space with an \gls{svm} classifier to determine if a detection is a fish head or not. \cite{Pedersen2017} utilises \gls{surf} to extract the features of the fish.
 
-Write about the  different detection methods used in state of the art solutions
+\cite{Qian2014} also utilised scale space \gls{doh} \gls{blob} detection, but instead of using an \gls{svm} classifier, extreme points are found and ellipse fitting is done to locate the head of the fish.
 
+\cite{Romero-Ferrero2019} also utilises background subtraction and applies a size dependent filter to eliminate smaller \gls{blob}s, which are not fish, from the image. Furthermore an intensity threshold is used to distinguish the \gls{blob}s from the background.\\
+%Utilising a \gls{cnn}, \cite{Romero-Ferrero2019} is able to detect if two \gls{blob}s are occluding each other.
+
+When detections are made, the tracking is done by connecting the points detected on the fish. This is solved in multiple different ways.
 
 \section{Tracking}
+When successful detections are made, the tracking is to link each detection together for each individual \gls{blob}.\\
+
+
 The low resolution pre processing solution made by \cite{Dolado2015} uses an already commercial tracking solution called \textit{Image-Pro Plus} to track the fish.
 
+A way to connect the desired point on each of the \gls{blob}s is by using the Hungarian algorithm, as done by \cite{Rodriguez2017} and \cite{Pedersen2017}. This is a cost function using the distance between points in two consecutive frames. Both the solutions use the Hungarian algorithm paired with a Kalman filter. The Kalman filter is used to predict the upcoming placement in the following frame, based on previous frames and a state-vector for the fish.
 
-Different tracking solutions, how many use the same solution
+By having identified every fish in the an image, \cite{idtracker2014} are able to track each fish by connecting the centre of mass point of the same identified object in concurrent frame. If a \gls{blob} is recognised as more than one individual, handling of the occlusion is necessary before the tracking can take place.
+
+By using the centre of the fitted ellipse on the fish \cite{Qian2014} uses a state vector consisting of the position and the speed of each individual in $ x $ and $y$ direction. The state vector is used by a Kalman filter to predict the fish's position. To accompany the Kalman filter prediction, \cite{Qian2014} uses feature matching to verify the the predictions made. 
+
+\cite{Wang2017} also uses a Kalman filter prediction paired with a \gls{cnn} based identification to track the fish.
 
 \section{Occlusion Handling}
+During tracking, occlusions can occur and in order to have complete trajectories these must be handled. Some solutions chooses not to handle these and have some missing data points, other solutions handles these occlusions in different manners.
+
 \cite{Dolado2015} uses a single image solution to handle occurring occlusions. They have categorised occlusions into two different types, with two different solutions. By defining a size threshold larger than the observed size of one fish, the \gls{blob}s consisting of two fish or more are segmented in the image. The two different categories of occlusions are an elongation of the fish, making one long \gls{blob}. The other category is when the fish either cross or create a T-like shape \citep{Dolado2015}.
 
 The elongation is handled by eroding the image and then dilating to just before the two \gls{blob}s connect to create only one. To handle the crossing, resulting in an X- or T-shape, an ellipse fitting is made around the \gls{blob} and it is then separated by the shortest axis of the ellipse \citep{Dolado2015}.
 
+\cite{Rodriguez2017} does not state how occlusions are handled, other than when identification is not possible, the \gls{blob} is not assigned to an identification.
 
-How is occlusions handled? Are they even handled? Is there a solution other than Kalman filter to estimate previous position?
+By detection the heads of the fish, \cite{Qian2014} are able to distinguish two fish from each other even though a crossing of the bodies occur. If two fish are in a close proximity and a head is close to another fitted ellipse, an angle constraint from the ellipse fitting is applied which is able to differentiate the two and detect the head. Should a head of the fish be occluded, the solution will produce an error and not be able to track the occluded fish at that point. Instead a compensation window of the previous state of the fish is used and the new position of the fish is estimated \citep{Qian2014}. 
+
+\cite{Wang2017} handles occlusions depending on the amount of time the individual is occluded. If the fish is occluded for no more than five consecutive frames, an assumption of the continued predicted path is made based on a constant velocity. If the fish is occluded for longer than five frames, the fish is re-identified by the \gls{cnn} and the trajectory will be missing data from the time it is occluded.
+
+\cite{idtracker2014} has two ways of handling occlusions. Firstly an erosion is attempted as a solution which can often lead to separating two \gls{blob}s from each other. If two individuals are still touching or one is occluding the other, the second step is initiated. Using the identification, the fish which are not in the occlusion are identified, to lower the amount of fingerprints to search for in the occlusion. The average velocity of the fish in the occlusion is found, using the speed of the fish necessary to take part in the occlusion,  if this speed exceeds a threshold, the fish is ruled out. If this does not yield a solution to the issue the individuals are left without an identity.
+
+The newer solution of idtracker, idtracker.ai by \cite{Romero-Ferrero2019} uses a \gls{cnn} to detect occlusions. This network is trained using images of both single animals and occlusions. Then by using the second \gls{cnn} used in th solution, used for identification, is used to identify the two animals taking part in the occlusion. by training the identity network on the images from the data which does not contain occlusions, the identity network is able to identify the animal even though occlusions occur \citep{Romero-Ferrero2019}. It is not mentioned how the solution handles an occlusion of which one individual is completely covered by another.
+
+\todo{Skriv en outro for afsnittet, som skal lede ind i en problem analyse.}
