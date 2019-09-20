@@ -139,7 +139,28 @@ Besides the five previously mentioned types of occlusions, several other occlusi
 	\label{fig:other}
 \end{figure}
 
-Occlusions occurring with all three fish are also categorised as other, as none of these fall into the defined categories, but are still occlusions.\todo{Forklar og begrund hvorfor der primært fokuseres på okklusioner med 2 fisk indblandet,og giv eksempler på det.}
+Occlusions occurring with all three fish are also categorised as other, as none of these fall into the defined categories, but are still occlusions.
+
+The more fish included in an occlusion the higher the complexity of the occlusion is prone to be. This includes both the type occlusion occurring between each pair of the fish but also possible occlusions and crossings of multiple fish occurring at the same time. 
+At some occasions, a three fish occlusion is easily split into two different types of occlusions and all three fish are very distinguishable from one another, as in \autoref{fig:3f_EC}, but at other times three fish will stack upon each other as in \autoref{fig:3f_stack}.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.47\textwidth}
+		\includegraphics[width=\textwidth]{3f_occl_EC}
+		\caption{Three fish in distinguishable occlusions}
+		\label{fig:3f_EC}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.47\textwidth}
+		\includegraphics[width=\textwidth]{3f_stack}
+		\caption{Three fish in a stacking occlusion}
+		\label{fig:3f_stack}
+	\end{subfigure}
+	\caption{Occlusions amde by three fish}
+	\label{fig:3fish_occl}
+\end{figure}
+
+As can be seen in \autoref{fig:3fish_occl}, the occlusions occurring are either combinations of the occlusions with only two fish or the same time of occlusion multiple times. Due to this it is chosen to focus on the occlusions occurring between two fish and prove feasibility of this to be able to, later, expand a solution to handle occlusions with more than two fish.\todo{Bør der være en segmenteret figur, der viser flere typer okklusioner, eller den ovenover nok? Skal den evt erstattes af en segmenteret?}
 
 \section{Occlusion Frequency}
 The occlusions happen with different frequencies, but some clearly occur more often than others:
@@ -151,4 +172,4 @@ The occlusions happen with different frequencies, but some clearly occur more of
 	\label{fig:occlFreq}
 \end{figure}
 
-\autoref{fig:occlFreq} shows that elongation is the most frequently occurring occlusion, together with the T-shape and other types of occlusions. In total $ 411 $ occlusions occur out of $ 3000 $ frames, which is $13.7\%$.
+\autoref{fig:occlFreq} shows that elongation is the most frequently occurring occlusion, together with the T-shape and other types of occlusions. In total $ 411 $ occlusions occur out of $ 3000 $ frames, which is $13.7\%$.\todo{Lav statistik for 5 fisk, evt også 6.}
