@@ -15,6 +15,12 @@ An occlusion can cause issues for one type of tracking system while others are a
 
 Solutions to missing data, due to occlusions, are often relinking tracklets to create complete trajectories. By computing a state vector for each individual and using a Kalman filter, predictions of the fish’s position are made. This is used to determine which fish belongs to the detections made after an occlusion has occurred \citep{Feijo2018, Qian2014}. 
 
+Instead of handling occlusions in a tracking step of a system it may be feasible to do it while detecting the fish in each frame. By doing this, more actions can be performed towards solving the occlusion instead of patching in missing data. Both \cite{Romero-Ferrero2019} and \cite{Dolado2015} propose solutions which detect occlusions before tracking in an effort to solve them using computer vision.\\
+
+REWRITE THIS
+But does different kinds of occlusions require different kinds of solving? Is some occlusions easier to handle than others?
+REWRITE THIS
+
 
 %The Zebrafish (Danio Rerio) is being used for scientific research to study human diseases and behavioural patterns in multiple different scenarios. The use of the Zebrafish is due to a lot of physiological similarities to humans together with a 70\% human disease genes similarity, which means results from experiments on the fish can be transferable to humans \citep{RahmanKhan2018, Delcourt2018}.
 %
