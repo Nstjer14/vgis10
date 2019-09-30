@@ -64,10 +64,72 @@ To investigate the difference in behavioural patterns, i.e. due to drugs, each z
 \subsection{Tracking Requirements}
 Talk about different viewpoints - side view, top view, advantages and disadvantages.\\
 FPS "requirements" - refer to Malte's report?\\
-Pre processing?
+Pre processing?\\
+
+In order to be able to track zebrafish, collection of data is firstly necessary. Recording of the zebrafish is done using one or more cameras either from the top of the aquarium or looking into the aquarium from the side.
+
+Due to the erratic movement of the zebrafish, the higher the \gls{fps} the camera is able to capture video at, the better, as this will increase the probability of the camera capturing every movement of the fish. \cite{Pedersen2017} states, that even at 240 \gls{fps} the zebrafish is still somewhat blurred when accelerating, which can lead to a lower detection rate.
+
+Using the top down view of the aquarium when recording, is often used when using a single camera setup. The top view takes advantage of the uniform and rigid head physiology of the zebrafish. Even though the zebrafish is able to contort it's body, the head most often remains the same, when using the top view. Examples of the rigid head is shown in \autoref{fig:rigid_head}.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{head_straight}
+		\label{fig:head_straight}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{head_bend}
+		\label{fig:head_bend}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+		\includegraphics[width=\textwidth]{head_bend2}
+		\label{fig:head_bend2}
+	\end{subfigure}
+\caption{Examples of the rigid head of the zebrafish in different grades og contortions of the body}
+\label{fig:rigid_head}
+\end{figure}
+
+The data shown in \autoref{fig:rigid_head}, is captured from above the aquarium with a \gls{nir} backlight beneath the aquarium.\\
+
+When recording from the side of the aquarium more details of the fish is available, as the zebrafish has uniquely coloured stripes on both sides, which can be used to identify the zebrafish \citep{Karpova2018}.
+
+According to \cite{Qian2017}, due to the shape of the zebrafish, it generally takes up more space when filmed from the side than from a top view. Furthermore, when the zebrafish turns towards or away from the camera, the shape will be very different than when looking at the side of the zebrafish \citep{Pedersen2017}. Examples of both a regular side view and some issues from the view is shown in \autoref{fig:side_view}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{side_view}
+	\caption{Examples of positions of zebrafish in the side view. Image from \cite{Pedersen2017}}
+	\label{fig:side_view}
+\end{figure}
+
+When data is acquired, it will need to be prepared before tracking or annotation is done. 
+
 \subsection{Annotating Data}
 General annotations, but also different "focus points" on the fish. What coordinate is extracted?\\
-Kinds of detections.
+Kinds of detections.\\
+
+Annotating data using an automated solution can also be defined as a tracking system, whereas annotating data may be understood as manually mark each zebrafish in every frame of the video. 
+
+A tracking system can be split into multiple steps:
+
+\begin{itemize}
+	\item Pre processing
+	\item Detection
+	\item Create trajectories
+\end{itemize}
+
+\subsubsection{Pre Processing}
+When making operations on a video, the file is split into individual frames, and every frame is treated as an individual image. Before locating of the zebrafish in the image is done, some pre processing of the image is performed. This often includes removing the background and noise from the image.
+
+This is done to ease the process of locating the zebrafish as it will be isolated in the image.
+
+\subsubsection{Detection}
+Detection of the zebrafish is done in multiple different ways. A detection will ultimately produce a single point in the image.
+
+Head detection of the zebrafish is often an approach used due to the rigid head of the zebrafish. This means the head will keep the same shape while swimming, whereas the rest fo the body may change shape, which will make it harder to detect.
+
+\subsubsection{Create Trajectories}
 
 \subsection{Occlusions}
 According to  \cite{Green2012} the use of automated tracking systems perform with same accuracy as manual annotations but in a faster manner. However, they state that automated tracking systems have complications e.g. occlusions. An occlusion is an overlap of two objects in an automated tracking system, and due to the social behaviour of the zebrafish, occlusions occur often when zebrafish are tracked.
