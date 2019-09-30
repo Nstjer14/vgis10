@@ -127,9 +127,25 @@ This is done to ease the process of locating the zebrafish as it will be isolate
 \subsubsection{Detection}
 Detection of the zebrafish is done in multiple different ways. A detection will ultimately produce a single point in the image.
 
-Head detection of the zebrafish is often an approach used due to the rigid head of the zebrafish. This means the head will keep the same shape while swimming, whereas the rest fo the body may change shape, which will make it harder to detect.
+Head detection of the zebrafish is often an approach used due to the rigid head of the zebrafish. This means the head will keep the same shape while swimming, whereas the rest of the body may change shape, which will make it harder to detect if focus is on the entire zebrafish.
+
+Other examples of detection, are centre of mass of the zebrafish or extracting a skeleton of the zebrafish, representing the shape of the object with a line. Finding the centre of mass of the zebrafish, if not being limited, may end up outside of the object if it is bending into a shape looking like a C.
+
+Examples of extracted points from detections are shown in \autoref{fig:det_point}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{det_point}
+	\caption{Examples of extracted points from detections}
+	\label{fig:det_point}
+\end{figure}
 
 \subsubsection{Create Trajectories}
+When the desired point in the zebrafish is extracted, the point needs to be linked together to create a trajectory. If only a single zebrafish is present in the aquarium no identification is necessary, as every point found belongs to one individual.
+
+As soon as multiple fish are present in the aquarium at the same time, a decision need to made to connect the previous frame's detections to the new ones in the current frame. This can be done by predicting where each individual will be in the following frame based on a state vector and experience from previous frames as input to a Kalman filter, which then makes a qualified guess based on statistics of the new positions. Besides a Kalman filter, a simple cost function such as the Hungarian algorithm can be applied.\\
+
+An issue occurring when multiple zebrafish are in the same aquarium, is when two or more individuals lie close enough together, or on top of each other, to confuse or trick the predictive and cost algorithm.
 
 \subsection{Occlusions}
 According to  \cite{Green2012} the use of automated tracking systems perform with same accuracy as manual annotations but in a faster manner. However, they state that automated tracking systems have complications e.g. occlusions. An occlusion is an overlap of two objects in an automated tracking system, and due to the social behaviour of the zebrafish, occlusions occur often when zebrafish are tracked.
