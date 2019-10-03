@@ -41,8 +41,14 @@ As shown in \autoref{fig:rcnn_pipe} the \gls{rcnn} is split into 3 individual st
 
 The proposed regions are extracted using \textit{SelectiveSearch} which initialises regions in the image and then merge these with a hierarchical grouping \citep{Uijlings2013}. The final grouping is then a box containing the entire image. The regions are grouped in relation to colour space and similarity \citep{Girshick2014}. 
 
-The next step in the solution is warping the proposed regions to fit the \gls{cnn} input size and extracting features from these and produce a $4096$ dimensional feature vector. The feature vectors consist of both positive and negative proposals found with the SelectiveSearch. These vectors are used to train the class specific \gls{svm}s
+The next step in the solution is warping the proposed regions to fit the \gls{cnn} input size and extracting features from these and produce a $4096$ dimensional feature vector. The feature vectors consist of both positive and negative proposals found with the SelectiveSearch. These vectors are used to train the class specific \gls{svm}s, one \gls{svm} per class in which a background class is included \citep{Girshick2014}.
+When testing a given image, the SelectiveSearch generates approximately 2000 proposals, which each are propagated through the \gls{cnn} to extract feature vectors. Each feature vector is tested against every class-specific \gls{svm}. To remove overlapping detections a greedy Non-maximum Suppression is applied \citep{Girshick2014}.
 
+At the time of publication, the \gls{rcnn} achieves state of the art performance in object detection, with a $~13\%$ increase in precision compared to the previously best method \citep{Girshick2014}.
+
+The \gls{rcnn} does leave room for improvements as it is a slow solution when testing on an image. Furthermore, as the solution is split into multiple modules, the loss calculations for training the \gls{svm}s is not used to update the \gls{cnn}.\\
+
+An improvement on both speed and accuracy of the \gls{rcnn} was published a year later, called Fast \gls{rcnn}. Instead of using the multi module pipeline, as illustrated in \autoref{fig:rcnn_pipe}, training is now done end-to-end.
 
 %As stated in \autoref{ch:intro}, tracking is dine in multiple different ways and so is the handling of occlusions. The different tracking solutions also enables different approaches to handling the occlusions.
 %
