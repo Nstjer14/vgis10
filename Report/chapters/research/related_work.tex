@@ -48,7 +48,26 @@ At the time of publication, the \gls{rcnn} achieves state of the art performance
 
 The \gls{rcnn} does leave room for improvements as it is a slow solution when testing on an image. Furthermore, as the solution is split into multiple modules, the loss calculations for training the \gls{svm}s is not used to update the \gls{cnn}.\\
 
-An improvement on both speed and accuracy of the \gls{rcnn} was published a year later, called Fast \gls{rcnn}. Instead of using the multi module pipeline, as illustrated in \autoref{fig:rcnn_pipe}, training is now done end-to-end.
+An improvement on both speed and accuracy of the \gls{rcnn} was published a year later, called Fast \gls{rcnn}. Instead of using the multi module pipeline, as illustrated in \autoref{fig:rcnn_pipe}, training is now done end-to-end. The solution takes an image  and a set of pre-computed object proposals, like the \gls{rcnn} \citep{Girshick2015}.
+
+Instead of individual proposals as in the original \gls{rcnn}, the new iteration propagates the entire image forward through multiple convolutional and max-pooling layers to produce a feature map. The features are extracted from each proposal using a \gls{roi} pooling layer. After the \gls{roi} pooling layer follows two fully connected layers leading to two different outputs; a softmax classification layer and a bounding box regression layer \citep{Girshick2015}. This pipeline is also shown in \autoref{fig:frcnn_pipe}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{frcnn_pipe}
+	\caption{Fast \gls{rcnn} pipeline overview, by \cite{Girshick2015}}
+	\label{fig:frcnn_pipe}
+\end{figure}
+
+Just like the \gls{rcnn}, the Fast \gls{rcnn} is pre-trained using the ImageNet database fine tuned for object detection, but instead of being based on AlexNet, as \gls{rcnn} is, the best performing solution of Fast \gls{rcnn} is based on the deeper VGG16 network \citep{Girshick2015}. When comparing to the previous iteration, \gls{rcnn}, it is done while both solutions are using the VGG16 network layout instead of the AlexNet for the \gls{rcnn}. This is done to have a common ground for comparison. Fast \gls{rcnn} improves precision with $4\%$ \citep{Girshick2015}.
+
+The main improvement of the new model is more in speed both in training and testing due to the computing of a convolutional feature map for the entire image. The speed increase is only in relation to the actual detection, as the regions proposals are slow and create a bottleneck for the system \citep{Girshick2015}.\\
+
+To combat the slow region proposals of Fast \gls{rcnn}, \cite{Ren2017} created a third iteration of the \gls{rcnn} network called \textit{Faster \gls{rcnn}}. Here a network named Region Proposal Network (RPN) is implemented to compute region proposals as part of a  network. The RPN shares the convolutional layers and the feature map with the \gls{roi} pooling in the Fast \gls{rcnn}. Due to the layers being computed on the entire image, the time used for proposals generated using the RPN is much lower than of a method such as SelectiveSearch. The RPN, computing region proposals, is the only new part of the Faster \gls{rcnn} compared to Fast \gls{rcnn}.
+
+The results of the Faster \gls{rcnn} in precision are rather small, but the entire computing time of the solution has been significantly minimised, from about $2$ seconds per image to $0.2$ seconds, including region proposals for both timings.
+
+Multiple solutions on the \gls{coco} dataset object detection leader board are still employing the framework of \gls{rcnn} and its predecessors, which shows why the \gls{rcnn} is still a state of the are solution.
 
 %As stated in \autoref{ch:intro}, tracking is dine in multiple different ways and so is the handling of occlusions. The different tracking solutions also enables different approaches to handling the occlusions.
 %
