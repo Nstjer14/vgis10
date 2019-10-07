@@ -1,8 +1,27 @@
 \graphicspath{{figures/design/}}
 \chapter{Design}\label{ch:design}
-Based on the acquired knowledge from \autoref{ch:related}, \autoref{ch:analysis}, and \autoref{ch:data_anal} a design of an occlusion detection solution is made. This is implemented using Python3 with the Keras API working with Tensorflow.
+Based on the acquired knowledge from \autoref{ch:intro} and \autoref{ch:data_anal} a design of an occlusion detection solution is made. This is implemented using Python3 with the Keras API working with Tensorflow.
 
-This chapter gives an in-depth description of how the implementations are made and the theory behind them.
+This chapter gives an in-depth description of how the implementations are made and the theory behind them.\\
+
+As stated in \autoref{ch:intro} the use of \gls{cnn}s in object detection is the highest performing solution in different benchmarks. Due to this it is chosen to utilise a \gls{cnn} to perform the occlusion detection of zebrafish. In the following description of \gls{cnn}s in general and of the implementation for object detection is presented.
+
+\section{Convolutional Neural Networks (CNN)}
+\begin{itemize}
+	\item Overview
+	\item Layer types
+	\item Convolutional layers
+\end{itemize}
+
+As regular neural networks, \gls{cnn}s are made up of neurons which have learnable weights and biases. Each neuron in the network receives inputs, performs an operation on the input and passes the output on, either linearly or non-linearly, dependent on the design. The outputs of the network are class scores of the input.\\
+
+When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer.
+
+\subsection{Layers}
+
+\subsection{Convolutional Layers}
+
+
 \section{Faster R-CNN}
 To be able to detect objects in a frame using a \gls{cnn} the Faster R-\gls{cnn} proposed by \cite{Ren2017} is used. The chosen solution model is the third iteration of the Region based Convolutional Neural Network by \cite{Girshick2014}. As the title proposes, the network is a region proposal based network, used for object detection in an image.
 

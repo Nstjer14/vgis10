@@ -2,10 +2,34 @@
 \chapter{Data Analysis}\label{ch:data_anal}
 To be able to develop a solution which is able to detect which type of occlusion and the location of it, some analysis of the data is necessary. This is also done to determine how many and which kind af categories of occlusion there is.
 
-The data primarily used, is a 60 second video with three zebrafish recorded at 50 \gls{fps}.
+
+
+\section{Video Capture}
+The video used is recorded from above the aquarium with a \gls{nir} backlight which gives the background a distinctive purple colour and the zebrafish are very dark. The video is $ 60 $ seconds long with three zebrafish recorded at $ 50 $ \gls{fps} yielding a total of $3000$ frames to be processed. An overview of the recording setup is shown in \autoref{fig:recording}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{recording}
+	\caption{Video recording setup}
+	\label{fig:recording}
+\end{figure}
+
+\subsection{Annotating Data}
+The data is annotated with bounding boxes for object detection. Annotations are made using the \textit{labelme} Python annotation tool \citep{labelme2016}. A snapshot of the UI of the software is shown in \autoref{fig:labelme}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{labelme}
+	\caption{Snapshot of labelme annotation tool while annotating data}
+	\label{fig:labelme}
+\end{figure}
+
+The software is able to export annotations in formats matching both VOC PASCAL and COCO, which is either an XML-file for each image using the VOC PASCAL annotation style or a json file using the COCO annotation style. The file-type chosen is the PASCAL VOC XML-files, with individual files for each image annotated.\\
+
+The annotations are made up of both \textit{no occlusions} and different types of occlusions presented in the following section.
 
 \section{Fish Shapes}
-Even a single a fish is able to twist into many different shapes, according to \cite{Kalueff2013} zebrafish has an extensive catalogue of behavioural patterns, which are also based on different contortions of the body. The main shapes of a single fish are shown in \autoref{fig:single_shape}. The shapes shown are only the ones seen from the top view of an aquarium.
+Even a single fish is able to twist into many different shapes, according to \cite{Kalueff2013} zebrafish has an extensive catalogue of behavioural patterns, which are also based on different contortions of the body. The main shapes of a single fish are shown in \autoref{fig:single_shape}. The shapes shown are only the ones seen from the top view of an aquarium.
 
 \begin{figure}[H]
 	\centering
