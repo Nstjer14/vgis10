@@ -13,13 +13,24 @@ As stated in \autoref{ch:intro} the use of \gls{cnn}s in object detection is the
 	\item Convolutional layers
 \end{itemize}
 
-As regular neural networks, \gls{cnn}s are made up of neurons which have learnable weights and biases. Each neuron in the network receives inputs, performs an operation on the input and passes the output on, either linearly or non-linearly, dependent on the design. The outputs of the network are class scores of the input.\\
+As regular neural networks, \gls{cnn}s are made up of neurons which have learnable weights and biases. Each neuron in the network receives inputs, performs an operation on the input and passes the output on, either linearly or non-linearly, dependent on the design.\\
 
-When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer.
+When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer. The last layer, the output layer, is a fully connected layer and represents the class scores. A \gls{cnn} has layers neurons arranged in three dimensions, namely: width, height, and depth. Already in the input an RGB image will have a depth of three due to the three colour channels. A small example of the \gls{cnn} architecture is shown in \autoref{fig:cnn_arch}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{cnn_arch}
+	\caption{Example of a \gls{cnn} architecture}
+	\label{fig:cnn_arch}
+\end{figure}
 
 \subsection{Layers}
+A simple \gls{cnn} will often consist of a sequence of layers, in which each layer transforms one volume of activations to another through differentiable functions. The main layers used are; convolutional layer, pooling layer, and fully connected layer. These layers are presented in the following.
 
-\subsection{Convolutional Layers}
+\subsubsection{Convolutional Layers}
+
+
+\subsubsection{Pooling Layers}
 
 
 \section{Faster R-CNN}
@@ -33,12 +44,12 @@ The model for the R-\gls{cnn} begins with a region search and then do the classi
 
 The regions proposed are then fed into the \gls{cnn} which in this case extracts a $4096$ dimensional feature vector. From this feature vector a classification is done using an \gls{svm} for each class \citep{Girshick2014}. \autoref{fig:rcnn_flow} shows the steps in the R-\gls{cnn}.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{rcnn_flow}
-	\caption{Simple flow diagram of the R-\gls{cnn} by \cite{Girshick2014}}
-	\label{fig:rcnn_flow}
-\end{figure}
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{rcnn_flow}
+%	\caption{Simple flow diagram of the R-\gls{cnn} by \cite{Girshick2014}}
+%	\label{fig:rcnn_flow}
+%\end{figure}
 
 The solution pre-trained on the ImageNet 2012 dataset and is fine tuned using an \gls{iou} greater than $0.5$ with the ground-truth boxes. At the time of development, \cite{Girshick2014} achieves a $62.4\%$ \gls{map} on the Pascal VOC 2012 dataset and $31.4\%$ \gls{map} on the ImageNet 2013 dataset, achieving top position on the leader boards for both datasets.
 
