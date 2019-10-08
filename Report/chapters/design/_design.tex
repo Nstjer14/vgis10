@@ -7,15 +7,9 @@ This chapter gives an in-depth description of how the implementations are made a
 As stated in \autoref{ch:intro} the use of \gls{cnn}s in object detection is the highest performing solution in different benchmarks. Due to this it is chosen to utilise a \gls{cnn} to perform the occlusion detection of zebrafish. In the following description of \gls{cnn}s in general and of the implementation for object detection is presented.
 
 \section{Convolutional Neural Networks (CNN)}
-\begin{itemize}
-	\item Overview
-	\item Layer types
-	\item Convolutional layers
-\end{itemize}
-
 As regular neural networks, \gls{cnn}s are made up of neurons which have learnable weights and biases. Each neuron in the network receives inputs, performs an operation on the input and passes the output on, either linearly or non-linearly, dependent on the design.\\
 
-When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer. The last layer, the output layer, is a fully connected layer and represents the class scores. A \gls{cnn} has layers neurons arranged in three dimensions, namely: width, height, and depth. Already in the input an RGB image will have a depth of three due to the three colour channels. A small example of the \gls{cnn} architecture is shown in \autoref{fig:cnn_arch}.
+When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer. The last layer, the output layer, is a fully connected layer and represents the class scores. A \gls{cnn} has layers neurons arranged in three dimensions, namely: width, height, and depth. Already in the input an RGB image will have a depth of three due to the three colour channels \citep{Karpathy2016b}. A small example of the \gls{cnn} architecture is shown in \autoref{fig:cnn_arch}.
 
 \begin{figure}[H]
 	\centering
@@ -28,9 +22,50 @@ When a \gls{cnn} receives an input image and then transforms this through a seri
 A simple \gls{cnn} will often consist of a sequence of layers, in which each layer transforms one volume of activations to another through differentiable functions. The main layers used are; convolutional layer, pooling layer, and fully connected layer. These layers are presented in the following.
 
 \subsubsection{Convolutional Layers}
+The convolutional layer is the main layer of operations in a \gls{cnn}, hence the name of the network type.\\
 
+A convolutional layer operates using a filter also known as a kernel to compute an output by iterating through the input image. This filter convolutes the input using the kernel weights to calculate a dot product of the input. Each filter produces a 2-dimensional activation map. If multiple filters are applied, the 2D activation maps will be stacked along the depth dimension in the output .
+
+Besides being able to control the width and height of the kernel, most often a square, it is also possible to control the depth. Depth is a hyperparameter and corresponds to the amount of filters applied to the input. The neurons along the depth dimension may activate on different edges or colours, but are still focusing on the same region as rest of the depth column.
+
+When sliding a kernel through an input, a stride can be selected. With a stride of $1$ the filter moves only one pixel at a time, while with a stride of $2$ or higher the filter will move multiple pixels before performing a convolution again.
+
+To enable a kernel to compute all pixels of an input zero padding is necessary. The size of the zero padding is another hyper parameter, and it allows for controlling the size of the output, mostly for keeping the the input size, in height and width, in the output \citep{Karpathy2016b}. A one dimensional example of the influences the different hyperparameters has is shown in \autoref{fig:hyper_ex}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{hyper_ex}
+	\caption{With a kernel of [1, 0, -1] the left example shows an input in the bottom with zero padding of size 1 and stride of 1. The right convolution has changed to stride 2 \citep{Karpathy2016b}}
+	\label{fig:hyper_ex}
+\end{figure}
+
+\autoref{fig:hyper_ex} shows that with a stride of one and employing zero padding, it is possible to keep the dimensions of the input in the output.
+
+The of the output of a kernel can be calculated using the equation:
+
+\begin{equation}\label{eq:kernel_out}
+	(W-F+2P)/S+1
+\end{equation}
+Where $ W $ is the input volume size, $F$ is the kernel size, $P$ is the amount of zero padding used on the border of the input and, $S$ is the stride. Using the example above, the output can be calculated: $(5-3+2\cdot1)/1+1=5$.
+
+The application of stride has some delimitations, as the result of \autoref{eq:kernel_out} has to be an integer \citep{Karpathy2016b}.\\
 
 \subsubsection{Pooling Layers}
+To be able to control overfitting and to reduce the amount of parameters thereby the computations in a network, pooling layers are often periodically placed in between successive convolutional layers. A pooling layer reduces the spatial size of the input.
+
+The size reduction is done using a filter in the same way as with a convolutional filter, but no convolutions are performed, instead, dependent on the kind of pooling, a value inside the filter is chosen to be passed on to. Using the most common type of pooling, Maxpooling, often with a filter size of $2\times2$ and a stride of 2, the highest pixel value within the filter is chosen as the output \citep{Karpathy2016b}. An example of this is shown in \autoref{fig:maxpool}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\textwidth]{maxpooling}
+	\caption{Maxpooling example with a $2\times2$ kernel and stride 2 \citep{Karpathy2016b}}
+	\label{fig:maxpool}
+\end{figure}
+
+\subsubsection{Classification}
+To be able to use the features extracted from input image in the convolutional layers one or more \gls{fc} layers are added in the end of a \gls{cnn}. As the name suggests, all the neurons in the previous layer is connected to the \gls{fc} layer.
+
+To classify $N$ number of classes, the last \gls{fc} layer has the same amount of neurons as the amount of classes. The output of the last \gls{fc} layer is then the probability of the input image belonging to each class, with a sum of all output neurons being $1$ \citep{Karpathy2016b}.
 
 
 \section{Faster R-CNN}
@@ -71,5 +106,6 @@ The implementation of the occlusion detection solution is done using the Keras A
 Tanken med afsnittet, er at gå i dybden med alle dele af netværket hver for sig, hvorfor de er med og hvad de gør.
 
 \subsection{Region Proposal Network}
+
 
 \subsection{Intersection over Union}
