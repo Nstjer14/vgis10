@@ -9,7 +9,7 @@ As stated in \autoref{ch:intro} the use of \gls{cnn}s in object detection is the
 \section{Convolutional Neural Networks (CNN)}
 As regular neural networks, \gls{cnn}s are made up of neurons which have learnable weights and biases. Each neuron in the network receives inputs, performs an operation on the input and passes the output on, either linearly or non-linearly, dependent on the design.\\
 
-When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer. The last layer, the output layer, is a fully connected layer and represents the class scores. A \gls{cnn} has layers neurons arranged in three dimensions, namely: width, height, and depth. Already in the input an RGB image will have a depth of three due to the three colour channels \citep{Karpathy2016b}. A small example of the \gls{cnn} architecture is shown in \autoref{fig:cnn_arch}.
+When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer. The last layer, the output layer, is a fully connected layer and represents the class scores. A \gls{cnn} has layers neurons arranged in three dimensions, namely: width, height, and depth. Already in the input an RGB image will have a depth of three due to the three colour channels \citep{Karpathy2019}. A small example of the \gls{cnn} architecture is shown in \autoref{fig:cnn_arch}.
 
 \begin{figure}[H]
 	\centering
@@ -30,12 +30,12 @@ Besides being able to control the width and height of the kernel, most often a s
 
 When sliding a kernel through an input, a stride can be selected. With a stride of $1$ the filter moves only one pixel at a time, while with a stride of $2$ or higher the filter will move multiple pixels before performing a convolution again.
 
-To enable a kernel to compute all pixels of an input zero padding is necessary. The size of the zero padding is another hyper parameter, and it allows for controlling the size of the output, mostly for keeping the the input size, in height and width, in the output \citep{Karpathy2016b}. A one dimensional example of the influences the different hyperparameters has is shown in \autoref{fig:hyper_ex}.
+To enable a kernel to compute all pixels of an input zero padding is necessary. The size of the zero padding is another hyper parameter, and it allows for controlling the size of the output, mostly for keeping the the input size, in height and width, in the output \citep{Karpathy2019}. A one dimensional example of the influences the different hyperparameters has is shown in \autoref{fig:hyper_ex}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{hyper_ex}
-	\caption{With a kernel of [1, 0, -1] the left example shows an input in the bottom with zero padding of size 1 and stride of 1. The right convolution has changed to stride 2 \citep{Karpathy2016b}}
+	\caption{With a kernel of [1, 0, -1] the left example shows an input in the bottom with zero padding of size 1 and stride of 1. The right convolution has changed to stride 2 \citep{Karpathy2019}}
 	\label{fig:hyper_ex}
 \end{figure}
 
@@ -48,57 +48,57 @@ The of the output of a kernel can be calculated using the equation:
 \end{equation}
 Where $ W $ is the input volume size, $F$ is the kernel size, $P$ is the amount of zero padding used on the border of the input and, $S$ is the stride. Using the example above, the output can be calculated: $(5-3+2\cdot1)/1+1=5$.
 
-The application of stride has some delimitations, as the result of \autoref{eq:kernel_out} has to be an integer \citep{Karpathy2016b}.\\
+The application of stride has some delimitations, as the result of \autoref{eq:kernel_out} has to be an integer \citep{Karpathy2019}.\\
 
 \subsubsection{Pooling Layers}
 To be able to control overfitting and to reduce the amount of parameters thereby the computations in a network, pooling layers are often periodically placed in between successive convolutional layers. A pooling layer reduces the spatial size of the input.
 
-The size reduction is done using a filter in the same way as with a convolutional filter, but no convolutions are performed, instead, dependent on the kind of pooling, a value inside the filter is chosen to be passed on to. Using the most common type of pooling, Maxpooling, often with a filter size of $2\times2$ and a stride of 2, the highest pixel value within the filter is chosen as the output \citep{Karpathy2016b}. An example of this is shown in \autoref{fig:maxpool}.
+The size reduction is done using a filter in the same way as with a convolutional filter, but no convolutions are performed, instead, dependent on the kind of pooling, a value inside the filter is chosen to be passed on to. Using the most common type of pooling, Maxpooling, often with a filter size of $2\times2$ and a stride of 2, the highest pixel value within the filter is chosen as the output \citep{Karpathy2019}. An example of this is shown in \autoref{fig:maxpool}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\textwidth]{maxpooling}
-	\caption{Maxpooling example with a $2\times2$ kernel and stride 2 \citep{Karpathy2016b}}
+	\caption{Maxpooling example with a $2\times2$ kernel and stride 2 \citep{Karpathy2019}}
 	\label{fig:maxpool}
 \end{figure}
 
 \subsubsection{Classification}
 To be able to use the features extracted from input image in the convolutional layers one or more \gls{fc} layers are added in the end of a \gls{cnn}. As the name suggests, all the neurons in the previous layer is connected to the \gls{fc} layer.
 
-To classify $N$ number of classes, the last \gls{fc} layer has the same amount of neurons as the amount of classes. The output of the last \gls{fc} layer is then the probability of the input image belonging to each class, with a sum of all output neurons being $1$ \citep{Karpathy2016b}.
+To classify $N$ number of classes, the last \gls{fc} layer has the same amount of neurons as the amount of classes. The output of the last \gls{fc} layer is then the probability of the input image belonging to each class, with a sum of all output neurons being $1$ \citep{Karpathy2019}.
 
 
-\section{Faster R-CNN}
-To be able to detect objects in a frame using a \gls{cnn} the Faster R-\gls{cnn} proposed by \cite{Ren2017} is used. The chosen solution model is the third iteration of the Region based Convolutional Neural Network by \cite{Girshick2014}. As the title proposes, the network is a region proposal based network, used for object detection in an image.
+%\section{Faster R-CNN}
+%To be able to detect objects in a frame using a \gls{cnn} the Faster R-\gls{cnn} proposed by \cite{Ren2017} is used. The chosen solution model is the third iteration of the Region based Convolutional Neural Network by \cite{Girshick2014}. As the title proposes, the network is a region proposal based network, used for object detection in an image.
 
-\subsection{Object Detection}
-Object detection opposed to image classification aims to locate defined objects or instances in images, and often in images containing several objects to locate at the same time, whereas an image classification solution aims to classify one object in an image and recognise the the single object without any localisation.
-
-\subsection{Region-based Convolutional Neural Network (R-CNN)} 
-The model for the R-\gls{cnn} begins with a region search and then do the classification. This model uses \textit{Selective Search} which initialises regions in the image and then merge these with a hierarchical grouping. The final grouping is then a box containing the entire image. The regions are grouped in relation to colour space and similarity \citep{Girshick2014}.
-
-The regions proposed are then fed into the \gls{cnn} which in this case extracts a $4096$ dimensional feature vector. From this feature vector a classification is done using an \gls{svm} for each class \citep{Girshick2014}. \autoref{fig:rcnn_flow} shows the steps in the R-\gls{cnn}.
-
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.8\textwidth]{rcnn_flow}
-%	\caption{Simple flow diagram of the R-\gls{cnn} by \cite{Girshick2014}}
-%	\label{fig:rcnn_flow}
-%\end{figure}
-
-The solution pre-trained on the ImageNet 2012 dataset and is fine tuned using an \gls{iou} greater than $0.5$ with the ground-truth boxes. At the time of development, \cite{Girshick2014} achieves a $62.4\%$ \gls{map} on the Pascal VOC 2012 dataset and $31.4\%$ \gls{map} on the ImageNet 2013 dataset, achieving top position on the leader boards for both datasets.
-
-\subsection{Fast Region-based Convolutional Network (Fast R-CNN)}
-The next iteration of the model by \cite{Girshick2015} is made to reduce time consumption due to the amount of models used to analyse all the regions proposed in the R-\gls{cnn}.
-
-Instead of using the selective search on the entire image, a \gls{cnn} is used to extract features from the image, and the selective search is utilised to detect \gls{roi}s from the feature maps produced by the \gls{cnn} \citep{Girshick2015}.
-
-\subsection{Faster Region-based Convolutional Network (Faster R-CNN)}
-The third iteration of R-\gls{cnn} replaces the selective search with a \textit{Region Proposal Network (RPN)}, which is a network that generates regions proposals, predict bounding boxes and detects objects.
-
-Here, once again, a \gls{cnn} is used to produce feature maps from the entire image and then uses the RPN to propose regions and feed these to a classifier.
-
-The Faster R-\gls{cnn} outperforms the previous iterations in both accuracy and speed. Due to this, the Faster R-\gls{cnn} solution is chosen to utilise for an occlusion detection model.
+%\subsection{Object Detection}
+%Object detection opposed to image classification aims to locate defined objects or instances in images, and often in images containing several objects to locate at the same time, whereas an image classification solution aims to classify one object in an image and recognise the the single object without any localisation.
+%
+%\subsection{Region-based Convolutional Neural Network (R-CNN)} 
+%The model for the R-\gls{cnn} begins with a region search and then do the classification. This model uses \textit{Selective Search} which initialises regions in the image and then merge these with a hierarchical grouping. The final grouping is then a box containing the entire image. The regions are grouped in relation to colour space and similarity \citep{Girshick2014}.
+%
+%The regions proposed are then fed into the \gls{cnn} which in this case extracts a $4096$ dimensional feature vector. From this feature vector a classification is done using an \gls{svm} for each class \citep{Girshick2014}. \autoref{fig:rcnn_flow} shows the steps in the R-\gls{cnn}.
+%
+%%\begin{figure}[H]
+%%	\centering
+%%	\includegraphics[width=0.8\textwidth]{rcnn_flow}
+%%	\caption{Simple flow diagram of the R-\gls{cnn} by \cite{Girshick2014}}
+%%	\label{fig:rcnn_flow}
+%%\end{figure}
+%
+%The solution pre-trained on the ImageNet 2012 dataset and is fine tuned using an \gls{iou} greater than $0.5$ with the ground-truth boxes. At the time of development, \cite{Girshick2014} achieves a $62.4\%$ \gls{map} on the Pascal VOC 2012 dataset and $31.4\%$ \gls{map} on the ImageNet 2013 dataset, achieving top position on the leader boards for both datasets.
+%
+%\subsection{Fast Region-based Convolutional Network (Fast R-CNN)}
+%The next iteration of the model by \cite{Girshick2015} is made to reduce time consumption due to the amount of models used to analyse all the regions proposed in the R-\gls{cnn}.
+%
+%Instead of using the selective search on the entire image, a \gls{cnn} is used to extract features from the image, and the selective search is utilised to detect \gls{roi}s from the feature maps produced by the \gls{cnn} \citep{Girshick2015}.
+%
+%\subsection{Faster Region-based Convolutional Network (Faster R-CNN)}
+%The third iteration of R-\gls{cnn} replaces the selective search with a \textit{Region Proposal Network (\gls{rpn})}, which is a network that generates regions proposals, predict bounding boxes and detects objects.
+%
+%Here, once again, a \gls{cnn} is used to produce feature maps from the entire image and then uses the \gls{rpn} to propose regions and feed these to a classifier.
+%
+%The Faster R-\gls{cnn} outperforms the previous iterations in both accuracy and speed. Due to this, the Faster R-\gls{cnn} solution is chosen to utilise for an occlusion detection model.
 
 \section{Occlusion Detection}
 The implementation of the occlusion detection solution is done using the Keras API with Tensorflow, running on Google Colaboratory's Jupyter Notebook Environment.\\
@@ -106,6 +106,17 @@ The implementation of the occlusion detection solution is done using the Keras A
 Tanken med afsnittet, er at gå i dybden med alle dele af netværket hver for sig, hvorfor de er med og hvad de gør.
 
 \subsection{Region Proposal Network}
+As mentioned in \autoref{sec:obj_det} \nameref{sec:obj_det}, the Faster \gls{rcnn} utilises a network called \textit{\gls{rpn}} to produce region proposals. The \gls{rpn} shares some convolutional layers with the \gls{cnn}. By sliding a small network over the feature map produced by the last shared convolutional layer \citep{Ren2017}.
 
+As the objective of the object detection is to find bounding boxes in the image, anchors are used. Anchors are fixed bounding boxes of different sizes and ratios and are placed throughout the image. They are used for reference when predicting object locations. An anchor is created for each point in the produced feature map, but the final anchors still reference the input image of the network. The \gls{rpn} outputs a set of good proposals for based an on the anchors, by having two outputs for each. The first output is an object probability score, the second is bounding box regression for adjusting the anchors to fit potential objects.
 
-\subsection{Intersection over Union}
+For training the \gls{rpn}, the anchors are split into two different categories; the first are those which overlap a ground-truth object with an \gls{iou} of more than $0.5$ which are considered foreground or an object. The second category are those that do not overlap a ground-truth object or have less than $0.1$ \gls{iou} \todo{check numbers}, and are considered background. 
+A batch of the anchors is sampled, maintaining a balance between foreground and background anchors. This batch is used to calculate the classification loss using binary cross entropy, and the foreground anchors, only, of the batch to calculate regression loss \citep{Ren2017}.\\
+
+In post processing, \gls{nms} is applied to solve duplicate proposals of one object by discarding the proposals with an \gls{iou} above a set threshold with another proposal with a higher score. A too high \gls{iou} threshold may lead to too many proposals, and too low can lead to missing proposals \citep{Ren2017}.
+
+\subsection{Region of Interest Pooling}
+With the object proposals from the \gls{rpn}, the next step is to classify the bounding boxes. But before the classification is done, \gls{roi} pooling is performed. This is done by extracting the fixed size feature maps for each proposal from the already existing convolutional feature map shared \citep{Ren2017}.
+
+\subsection{Classification}
+In the classification step of the network the \gls{rcnn} network is employed. With a \gls{fc} layer as output the \gls{rcnn} has two goals of classifying the proposals into classes and to fit the bounding boxes. It flattens the feature map of each proposal and then uses two \gls{fc} layers of size $4096$ with \gls{relu} activation. Then, using two different \gls{fc} layers for each of the objects, one for classification and one for bounding box regression prediction \citep{Ren2017}. \todo{indsæt figurer der giver overblik}
