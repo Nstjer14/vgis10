@@ -26,11 +26,11 @@ The convolutional layer is the main layer of operations in a \gls{cnn}, hence th
 
 A convolutional layer operates using a filter also known as a kernel to compute an output by iterating through the input image. This filter convolutes the input using the kernel weights to calculate a dot product of the input. Each filter produces a 2-dimensional activation map. If multiple filters are applied, the 2D activation maps will be stacked along the depth dimension in the output .
 
-Besides being able to control the width and height of the kernel, most often a square, it is also possible to control the depth. Depth is a hyperparameter and corresponds to the amount of filters applied to the input. The neurons along the depth dimension may activate on different edges or colours, but are still focusing on the same region as rest of the depth column.
+Besides being able to control the width and height of the kernel, most often a square, it is also possible to control the depth. Depth is a hyper parameter and corresponds to the amount of filters applied to the input. The neurons along the depth dimension may activate on different edges or colours, but are still focusing on the same region as rest of the depth column.
 
 When sliding a kernel through an input, a stride can be selected. With a stride of $1$ the filter moves only one pixel at a time, while with a stride of $2$ or higher the filter will move multiple pixels before performing a convolution again.
 
-To enable a kernel to compute all pixels of an input zero padding is necessary. The size of the zero padding is another hyper parameter, and it allows for controlling the size of the output, mostly for keeping the the input size, in height and width, in the output \citep{Karpathy2016b}. A one dimensional example of the influences the different hyperparameters has is shown in \autoref{fig:hyper_ex}.
+To enable a kernel to compute all pixels of an input zero padding is necessary. The size of the zero padding is another hyper parameter, and it allows for controlling the size of the output, mostly for keeping the input size, in height and width, in the output \citep{Karpathy2016b}. A one dimensional example of the influences the different hyper parameters has is shown in \autoref{fig:hyper_ex}.
 
 \begin{figure}[H]
 	\centering
@@ -48,10 +48,10 @@ The of the output of a kernel can be calculated using the equation:
 \end{equation}
 Where $ W $ is the input volume size, $F$ is the kernel size, $P$ is the amount of zero padding used on the border of the input and, $S$ is the stride. Using the example above, the output can be calculated: $(5-3+2\cdot1)/1+1=5$.
 
-The application of stride has some delimitations, as the result of \autoref{eq:kernel_out} has to be an integer \citep{Karpathy2016b}.\\
+The application of stride has some limitations, as the result of \autoref{eq:kernel_out} has to be an integer \citep{Karpathy2016b}.\\
 
 \subsubsection{Pooling Layers}
-To be able to control overfitting and to reduce the amount of parameters thereby the computations in a network, pooling layers are often periodically placed in between successive convolutional layers. A pooling layer reduces the spatial size of the input.
+To be able to control overfitting and to reduce the amount of parameters thereby the computations in a network, pooling layers are often periodically placed in-between successive convolutional layers. A pooling layer reduces the spatial size of the input.
 
 The size reduction is done using a filter in the same way as with a convolutional filter, but no convolutions are performed, instead, dependent on the kind of pooling, a value inside the filter is chosen to be passed on to. Using the most common type of pooling, Maxpooling, often with a filter size of $2\times2$ and a stride of 2, the highest pixel value within the filter is chosen as the output \citep{Karpathy2016b}. An example of this is shown in \autoref{fig:maxpool}.
 
@@ -119,7 +119,7 @@ The images fed into the network are of size $224 \times 224$ and the last fully 
 	\centering
 	\caption{Detailed description of VGG16 design. The input is $224 \times 224 \times3$ images}
 	\label{tab:vgg16}
-	\begin{tabular}{lrrrr}
+ 	\begin{tabular}{lrrrr}
 		\textbf{Layer Type}     & \textbf{Feature Map Size} & \textbf{Kernel/Pool Size} & \textbf{Activation}  \\ \hline
 		\textbf{Block 1}        &                           &                           &                                     \\
 		\rowcolor{lightGrey}  

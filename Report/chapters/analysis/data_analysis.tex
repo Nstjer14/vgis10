@@ -2,10 +2,8 @@
 \chapter{Data Analysis}\label{ch:data_anal}
 To be able to develop a solution which is able to detect which type of occlusion and the location of it, some analysis of the data is necessary. This is also done to determine how many and which kind af categories of occlusion there is.
 
-
-
 \section{Video Capture}
-The video used is recorded from above the aquarium with a \gls{nir} backlight which gives the background a distinctive purple colour and the zebrafish are very dark. The video is $ 60 $ seconds long with three zebrafish recorded at $ 50 $ \gls{fps} yielding a total of $3000$ frames to be processed. An overview of the recording setup is shown in \autoref{fig:recording}
+The video used is recorded from above the aquarium with a \gls{nir} backlight which makes the dark zebrafish stand out in contrast to the background. The video is $ 60 $ seconds long with three zebrafish recorded at $ 50 $ \gls{fps} yielding a total of $3000$ frames to be processed. An overview of the recording setup is shown in \autoref{fig:recording}
 
 \begin{figure}[H]
 	\centering
@@ -94,9 +92,9 @@ Two fish touching is done in all kinds of positions and angles. When touching en
 \end{figure}
 
 \subsection{Above and Below}
-More complete occlusions often happen when one fish is above the other. The higher the water goes in an aquarium, the more likely the fish will be to swim above one another, as this gives them more space to move around in. There is mainly two different occlusions happening in this instance, which is two fish creating a cross, or one fish almost completely occluding the other.
+More complex occlusions often happen when one fish is above the other. The water depth of the aquarium affect this, as the fish are more likely to swim above each other if the water depth allows for it. There is mainly two different occlusions happening in this instance; two fish creating a cross or one fish almost completely occluding the other.
 
-The crossing can happen in multiple different angles. A crossing occlusion is defined as two fish creating an X-shape. Examples of different crosses are shown in \autoref{fig:cross}. 
+The crossing can happen in multiple angles. A crossing occlusion is defined as two fish creating an X-shape. Examples of different crosses are shown in \autoref{fig:cross}. 
 
 \autoref{fig:crossWide} shows a crossing occlusion, which is close to being an \textit{on-top} occlusion, but will be defined as a cross due to the head and tails being separated.
 
@@ -121,7 +119,7 @@ The crossing can happen in multiple different angles. A crossing occlusion is de
 	\label{fig:cross}
 \end{figure}
 
-The on-top occlusions is when one fish is at least somewhat straight on top of another fish. This kind of occlusions can at times be a shorter kind of elongation, when the head of the top fish is further in on the body of the bottom fish. Examples of op-top occlusion are shown in \autoref{fig:onTop}.
+The on-top occlusions is when one fish is somewhat straight on top of another fish. This kind of occlusions can at times be a shorter kind of elongation e.g. when the head of the top fish is further in on the body of the bottom fish. Examples of op-top occlusion are shown in \autoref{fig:onTop}.
 
 \begin{figure}[H]
 	\centering
@@ -187,7 +185,7 @@ At some occasions, a three fish occlusion is easily split into two different typ
 As can be seen in \autoref{fig:3fish_occl}, the occlusions occurring are either combinations of the occlusions with only two fish or the same time of occlusion multiple times. Due to this it is chosen to focus on the occlusions occurring between two fish and prove feasibility of this to be able to, later, expand a solution to handle occlusions with more than two fish.\todo{Bør der være en segmenteret figur, der viser flere typer okklusioner, eller den ovenover nok? Skal den evt erstattes af en segmenteret?}
 
 \section{Occlusion Frequency}
-The occlusions happen with different frequencies, but some clearly occur more often than others:
+In the data set provided by Loligo.. the occlusions happen with different frequencies. The frequencies are displayed in a bar chart in \autoref{fig:occlFreq}.
 
 \begin{figure}[H]
 	\centering
