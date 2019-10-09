@@ -9,7 +9,7 @@ As stated in \autoref{ch:intro} the use of \gls{cnn}s in object detection is the
 \section{Convolutional Neural Networks (CNN)}
 As regular neural networks, \gls{cnn}s are made up of neurons which have learnable weights and biases. Each neuron in the network receives inputs, performs an operation on the input and passes the output on, either linearly or non-linearly, dependent on the design.\\
 
-When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer. The last layer, the output layer, is a fully connected layer and represents the class scores. A \gls{cnn} has layers neurons arranged in three dimensions, namely: width, height, and depth. Already in the input an RGB image will have a depth of three due to the three colour channels \citep{Karpathy2019}. A small example of the \gls{cnn} architecture is shown in \autoref{fig:cnn_arch}.
+When a \gls{cnn} receives an input image and then transforms this through a series of hidden layers in the network. Each hidden layer consist of a set of neurons, and each neuron is fully connected to the neurons in the previous layer, but does not share any connections inside the layer. The last layer, the output layer, is a fully connected layer and represents the class scores. A \gls{cnn} has layers neurons arranged in three dimensions, namely: width, height, and depth. Already in the input an RGB image will have a depth of three due to the three colour channels \citep{Karpathy2016b}. A small example of the \gls{cnn} architecture is shown in \autoref{fig:cnn_arch}.
 
 \begin{figure}[H]
 	\centering
@@ -30,12 +30,12 @@ Besides being able to control the width and height of the kernel, most often a s
 
 When sliding a kernel through an input, a stride can be selected. With a stride of $1$ the filter moves only one pixel at a time, while with a stride of $2$ or higher the filter will move multiple pixels before performing a convolution again.
 
-To enable a kernel to compute all pixels of an input zero padding is necessary. The size of the zero padding is another hyper parameter, and it allows for controlling the size of the output, mostly for keeping the the input size, in height and width, in the output \citep{Karpathy2019}. A one dimensional example of the influences the different hyperparameters has is shown in \autoref{fig:hyper_ex}.
+To enable a kernel to compute all pixels of an input zero padding is necessary. The size of the zero padding is another hyper parameter, and it allows for controlling the size of the output, mostly for keeping the the input size, in height and width, in the output \citep{Karpathy2016b}. A one dimensional example of the influences the different hyperparameters has is shown in \autoref{fig:hyper_ex}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{hyper_ex}
-	\caption{With a kernel of [1, 0, -1] the left example shows an input in the bottom with zero padding of size 1 and stride of 1. The right convolution has changed to stride 2 \citep{Karpathy2019}}
+	\caption{With a kernel of [1, 0, -1] the left example shows an input in the bottom with zero padding of size 1 and stride of 1. The right convolution has changed to stride 2 \citep{Karpathy2016b}}
 	\label{fig:hyper_ex}
 \end{figure}
 
@@ -48,24 +48,24 @@ The of the output of a kernel can be calculated using the equation:
 \end{equation}
 Where $ W $ is the input volume size, $F$ is the kernel size, $P$ is the amount of zero padding used on the border of the input and, $S$ is the stride. Using the example above, the output can be calculated: $(5-3+2\cdot1)/1+1=5$.
 
-The application of stride has some delimitations, as the result of \autoref{eq:kernel_out} has to be an integer \citep{Karpathy2019}.\\
+The application of stride has some delimitations, as the result of \autoref{eq:kernel_out} has to be an integer \citep{Karpathy2016b}.\\
 
 \subsubsection{Pooling Layers}
 To be able to control overfitting and to reduce the amount of parameters thereby the computations in a network, pooling layers are often periodically placed in between successive convolutional layers. A pooling layer reduces the spatial size of the input.
 
-The size reduction is done using a filter in the same way as with a convolutional filter, but no convolutions are performed, instead, dependent on the kind of pooling, a value inside the filter is chosen to be passed on to. Using the most common type of pooling, Maxpooling, often with a filter size of $2\times2$ and a stride of 2, the highest pixel value within the filter is chosen as the output \citep{Karpathy2019}. An example of this is shown in \autoref{fig:maxpool}.
+The size reduction is done using a filter in the same way as with a convolutional filter, but no convolutions are performed, instead, dependent on the kind of pooling, a value inside the filter is chosen to be passed on to. Using the most common type of pooling, Maxpooling, often with a filter size of $2\times2$ and a stride of 2, the highest pixel value within the filter is chosen as the output \citep{Karpathy2016b}. An example of this is shown in \autoref{fig:maxpool}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\textwidth]{maxpooling}
-	\caption{Maxpooling example with a $2\times2$ kernel and stride 2 \citep{Karpathy2019}}
+	\caption{Maxpooling example with a $2\times2$ kernel and stride 2 \citep{Karpathy2016b}}
 	\label{fig:maxpool}
 \end{figure}
 
 \subsubsection{Classification}
 To be able to use the features extracted from input image in the convolutional layers one or more \gls{fc} layers are added in the end of a \gls{cnn}. As the name suggests, all the neurons in the previous layer is connected to the \gls{fc} layer.
 
-To classify $N$ number of classes, the last \gls{fc} layer has the same amount of neurons as the amount of classes. The output of the last \gls{fc} layer is then the probability of the input image belonging to each class, with a sum of all output neurons being $1$ \citep{Karpathy2019}.
+To classify $N$ number of classes, the last \gls{fc} layer has the same amount of neurons as the amount of classes. The output of the last \gls{fc} layer is then the probability of the input image belonging to each class, with a sum of all output neurons being $1$ \citep{Karpathy2016b}.
 
 
 %\section{Faster R-CNN}
@@ -99,18 +99,97 @@ To classify $N$ number of classes, the last \gls{fc} layer has the same amount o
 %Here, once again, a \gls{cnn} is used to produce feature maps from the entire image and then uses the \gls{rpn} to propose regions and feed these to a classifier.
 %
 %The Faster R-\gls{cnn} outperforms the previous iterations in both accuracy and speed. Due to this, the Faster R-\gls{cnn} solution is chosen to utilise for an occlusion detection model.
+\section{Image Classification}
+A simple occlusion detection can be made without any localisation in order to notify a system of an occlusion present in an image. This is done using an image classification network, trained on two classes; occlusion or no occlusion.
 
-\section{Occlusion Detection}
-The implementation of the occlusion detection solution is done using the Keras API with Tensorflow, running on Google Colaboratory's Jupyter Notebook Environment.\\
+The network chosen is the VGG16 network, as this is also what the \gls{rcnn} classification network is based upon. An overview of the layers in the VGG16 network is shown in \autoref{fig:vgg16}.
 
-Tanken med afsnittet, er at gå i dybden med alle dele af netværket hver for sig, hvorfor de er med og hvad de gør.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{vgg}
+	\caption{VGG16 structure}
+	\label{fig:vgg16}
+\end{figure}
+
+The network is trained with the pre-trained weights from the ImageNet database. The network can be split into five blocks of convolutions with a max pooling layer after each block.
+
+The images fed into the network are of size $224 \times 224$ and the last fully connected layer has a depth of $2$ due to the amount of classes. The structure of the network is shown in \autoref{tab:vgg16}. \autoref{tab:vgg16} also shows an extra dense layer has been added, and the depth of the \gls{fc} layers has been made smaller.
+
+\begin{table}[H]
+	\centering
+	\caption{Detailed description of VGG16 design. The input is $224 \times 224 \times3$ images}
+	\label{tab:vgg16}
+	\begin{tabular}{lrrrr}
+		\textbf{Layer Type}     & \textbf{Feature Map Size} & \textbf{Kernel/Pool Size} & \textbf{Activation}  \\ \hline
+		\textbf{Block 1}        &                           &                           &                                     \\
+		\rowcolor{lightGrey}  
+		Conv2D                  & $64$                      & $3\times3$                & ReLU                                \\
+		Conv2D                  & $64$                      & $3\times3$                & ReLU                                \\
+		\rowcolor{lightGrey} 
+		MaxPooling2D            &                           & $2\times2$                &                                     \\
+		\textbf{Block 2}        &                           &                           &                                     \\
+		\rowcolor{lightGrey}  
+		Conv2D                  & $128$                     & $3\times3$                & ReLU                                \\
+		Conv2D                  & $128$                     & $3\times3$                & ReLU                                \\
+		\rowcolor{lightGrey}  
+		MaxPooling2D            &                       &    $2\times2$             & ReLU                                \\
+		\textbf{Block 3}        &                           &                           &                                    \\
+		\rowcolor{lightGrey}  
+		Conv2D                  & $256$                     & $3\times3$                & ReLU                                \\
+		Conv2D                  & $256$                     & $3\times3$                & ReLU                                \\
+		\rowcolor[HTML]{EFEFEF} 
+		Conv2D                  & $256$                     & $3\times3$                & ReLU                                \\
+		MaxPooling2D            &               &          $2\times2$                  &                                     \\
+		\textbf{Block 4}        &                           &                           &                                     \\
+		\rowcolor{lightGrey}  
+		Conv2D                  & $512$                     & $3\times3$                & ReLU                                \\
+		Conv2D                  & $512$                     & $3\times3$                & ReLU                                \\
+		\rowcolor{lightGrey}  
+		Conv2D                  & $512$                     & $3\times3$                & ReLU                                \\
+		MaxPooling2D            &             &          $2\times2$                  &                                     \\
+		\textbf{Block 5}        &                           &                           &                                    \\
+		\rowcolor{lightGrey}  
+		Conv2D                  & $512$                     & $3\times3$                & ReLU                                \\
+		Conv2D                  & $512$                     & $3\times3$                & ReLU                                \\
+		\rowcolor{lightGrey}  
+		Conv2D                  & $512$                     & $3\times3$                & ReLU                                \\
+		MaxPooling2D            &               &        $2\times2$        & ReLU                                \\
+		\textbf{Classification} &                           &                           &                                     \\
+		\rowcolor{lightGrey}  
+		Flatten                 &                           &                           &                                     \\
+		Dense                   & $1024$                    &                           & ReLU                                \\
+		\rowcolor{lightGrey}  
+		Dense               	& $1024$                    &                           & ReLU                 	           \\
+		Dense                   & $512$                    	&                           & ReLU                                \\
+		\rowcolor{lightGrey} 
+		Dense                   & Amount of Classes         &                           & Softmax                            
+	\end{tabular}
+\end{table}
+
+\section{Faster \gls{rcnn} Object Detection}
+To be able to localise the occlusions in the image and mark them with bounding boxes, an object detection solution is necessary. For this the Faster \gls{rcnn} presented in \autoref{ch:intro} is implemented. In the following the different objects in the pipeline are described in more detail. An overview of the pipeline is shown in \autoref{fig:faster_rcnn}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{fasterrcnn-architecture}
+	\caption{Overview of the Faster \gls{rcnn} pipeline and its steps \citep{Rey2018}}
+	\label{fig:faster_rcnn}
+\end{figure}
+
 
 \subsection{Region Proposal Network}
 As mentioned in \autoref{sec:obj_det} \nameref{sec:obj_det}, the Faster \gls{rcnn} utilises a network called \textit{\gls{rpn}} to produce region proposals. The \gls{rpn} shares some convolutional layers with the \gls{cnn}. By sliding a small network over the feature map produced by the last shared convolutional layer \citep{Ren2017}.
 
-As the objective of the object detection is to find bounding boxes in the image, anchors are used. Anchors are fixed bounding boxes of different sizes and ratios and are placed throughout the image. They are used for reference when predicting object locations. An anchor is created for each point in the produced feature map, but the final anchors still reference the input image of the network. The \gls{rpn} outputs a set of good proposals for based an on the anchors, by having two outputs for each. The first output is an object probability score, the second is bounding box regression for adjusting the anchors to fit potential objects.
+As the objective of the object detection is to find bounding boxes in the image, anchors are used. Anchors are fixed bounding boxes of different sizes and ratios and are placed throughout the image. They are used for reference when predicting object locations. An anchor is created for each point in the produced feature map, but the final anchors still reference the input image of the network. The \gls{rpn} outputs a set of good proposals for based an on the anchors, by having two outputs for each. The first output is an object probability score, the second is bounding box regression for adjusting the anchors to fit potential objects. An example of how anchors are plced in an input image is shown in \autoref{fig:anchors}.
 
-For training the \gls{rpn}, the anchors are split into two different categories; the first are those which overlap a ground-truth object with an \gls{iou} of more than $0.5$ which are considered foreground or an object. The second category are those that do not overlap a ground-truth object or have less than $0.1$ \gls{iou} \todo{check numbers}, and are considered background. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{anchors-centers}
+	\caption{Example of anchor centres placed in an input image \citep{Rey2018}}
+	\label{fig:anchors}
+\end{figure}
+
+For training the \gls{rpn}, the anchors are split into two different categories; the first are those which overlap a ground-truth object with an \gls{iou} of more than $0.7$ which are considered foreground or an object. The second category are those that do not overlap a ground-truth object or have less than $0.3$ \gls{iou}, and are considered background. 
 A batch of the anchors is sampled, maintaining a balance between foreground and background anchors. This batch is used to calculate the classification loss using binary cross entropy, and the foreground anchors, only, of the batch to calculate regression loss \citep{Ren2017}.\\
 
 In post processing, \gls{nms} is applied to solve duplicate proposals of one object by discarding the proposals with an \gls{iou} above a set threshold with another proposal with a higher score. A too high \gls{iou} threshold may lead to too many proposals, and too low can lead to missing proposals \citep{Ren2017}.
@@ -119,4 +198,11 @@ In post processing, \gls{nms} is applied to solve duplicate proposals of one obj
 With the object proposals from the \gls{rpn}, the next step is to classify the bounding boxes. But before the classification is done, \gls{roi} pooling is performed. This is done by extracting the fixed size feature maps for each proposal from the already existing convolutional feature map shared \citep{Ren2017}.
 
 \subsection{Classification}
-In the classification step of the network the \gls{rcnn} network is employed. With a \gls{fc} layer as output the \gls{rcnn} has two goals of classifying the proposals into classes and to fit the bounding boxes. It flattens the feature map of each proposal and then uses two \gls{fc} layers of size $4096$ with \gls{relu} activation. Then, using two different \gls{fc} layers for each of the objects, one for classification and one for bounding box regression prediction \citep{Ren2017}. \todo{indsæt figurer der giver overblik}
+In the classification step of the network the \gls{rcnn} network is employed. With a \gls{fc} layer as output the \gls{rcnn} has two goals of classifying the proposals into classes and to fit the bounding boxes. It flattens the feature map of each proposal and then uses two \gls{fc} layers of size $4096$ with \gls{relu} activation. Then, using two different \gls{fc} layers for each of the objects, one for classification and one for bounding box regression prediction \citep{Ren2017}. An example of the flow of a classification by the \gls{rcnn} is also shown in \autoref{fig:rcnn_ex}. Here a bicycle is classified and the bounding box is adjusted to fit the object.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{rcnn-architecture}
+	\caption{Example of classification flow in the \gls{rcnn} classifying a bicycle and regressing a bounding box \citep{Rey2018}}
+	\label{fig:rcnn_ex}
+\end{figure}

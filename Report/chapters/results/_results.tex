@@ -4,6 +4,7 @@
 %
 \section{Training}
 
+\subsection{40 Epochs}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{acc}
@@ -28,6 +29,33 @@
 	\caption{Total loss}
 	\label{fig:}
 \end{figure}
+
+\subsection{135 Epochs}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{acc-135}
+	\caption{Accuracy}
+	\label{fig:}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{loss_class-135}
+	\caption{Loss Class - classification and bbox regression}
+	\label{fig:}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{loss_rpn-135}
+	\caption{Loss Region Proposal Network - classification and bbox regression}
+	\label{fig:}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{total_loss-135}
+	\caption{Total loss}
+	\label{fig:}
+\end{figure}
+
 
 \section{Testing}
 \gls{map} at $81.7\%$. \todo{Make figures showing detections}
