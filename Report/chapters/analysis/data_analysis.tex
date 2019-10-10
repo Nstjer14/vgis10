@@ -1,6 +1,6 @@
 \graphicspath{{figures/analysis/}}
 \chapter{Data Analysis}\label{ch:data_anal}
-To be able to develop a solution which is able to detect which type of occlusion and the location of it, some analysis of the data is necessary. This is also done to determine how many and which kind af categories of occlusion there is.
+To be able to develop a solution which is able to detect which type of occlusion occurs and the location of it, some analysis of the data is necessary. This is also done to determine how many and which kind of categories of occlusions there are.
 
 \section{Video Capture}
 The video used is recorded from above the aquarium with a \gls{nir} backlight which makes the dark zebrafish stand out in contrast to the background. The video is $ 60 $ seconds long with three zebrafish recorded at $ 50 $ \gls{fps} yielding a total of $3000$ frames to be processed. An overview of the recording setup is shown in \autoref{fig:recording}
@@ -27,7 +27,7 @@ The software is able to export annotations in formats matching both VOC PASCAL a
 The annotations are made up of both \textit{no occlusions} and different types of occlusions presented in the following section.
 
 \section{Fish Shapes}
-Even a single fish is able to twist into many different shapes, according to \cite{Kalueff2013} zebrafish has an extensive catalogue of behavioural patterns, which are also based on different contortions of the body. The main shapes of a single fish are shown in \autoref{fig:single_shape}. The shapes shown are only the ones seen from the top view of an aquarium.
+Even a single zebrafish is able to twist into many different shapes, according to \cite{Kalueff2013} zebrafish has an extensive catalogue of behavioural patterns, which are also based on different contortions of the body. The main shapes of a single zebrafish are shown in \autoref{fig:single_shape}. The shapes shown are only the ones seen from the top view of an aquarium.
 
 \begin{figure}[H]
 	\centering
@@ -50,12 +50,12 @@ Even a single fish is able to twist into many different shapes, according to \ci
 \label{fig:single_shape}
 \end{figure}
 
-\cite{Kalueff2013} states that the C-shape is made as starting movement to propel itself forward, often in order to escape or because the fish is startled. The bending into a C-shape, can also be caused by the fish turning. The S-shape is made for the same reasons as the C-shape, to propel the fish forward.\\
+\cite{Kalueff2013} states that the C-shape is made as starting movement to propel itself forward, often in order to escape or because the zebrafish is startled. The bending into a C-shape, can also be caused by the zebrafish turning. The S-shape is made for the same reasons as the C-shape, to propel the zebrafish forward.\\
 
-When two fish are touching or crossing each other in any way, they create multiple new shapes.
+When two zebrafish are touching or crossing each other in any way, they create multiple new shapes.
 
 \subsection{Touching}
-When two fish are touching they in general create three different kind of shapes. They will either be elongating one another, creating one single long object. This can be either head-to-head or head-to-tail. Both examples are shown in \autoref{fig:elongation}. When touching head-to-tail it is most often seen as courtship between a male and a female fish \citep{Kalueff2013}.
+When two zebrafish are touching they in general create three different kind of shapes. They will either be elongating one another, creating one single long object. This can be either head-to-head, tail-to-tail, or head-to-tail. Two examples are shown in \autoref{fig:elongation}. When touching head-to-tail it is most often seen as courtship between a male and a female zebrafish \citep{Kalueff2013}.
 
 \begin{figure}[H]
 	\centering
@@ -73,13 +73,13 @@ When two fish are touching they in general create three different kind of shapes
 \label{fig:elongation}
 \end{figure}
 
-Two fish touching is done in all kinds of positions and angles. When touching end-to-end but at a tighter angle, two fish tend to create a V-shape. In the beginning and end of a crossing or when touching the head or tail to the middle of the body of another fish, a T-shape is created. Examples of both shapes are shown in \autoref{fig:TandV}.
+Two zebrafish touching is done in all kinds of positions and angles. When touching end-to-end but at a tighter angle, two zebrafish tend to create a V-shape. In the beginning and end of a crossing or when touching the head or tail to the middle of the body of another zebrafish, a T-shape is created. Examples of both shapes are shown in \autoref{fig:TandV}.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.47\textwidth}
 		\includegraphics[width=\textwidth]{v-shape}
-		\caption{V-shape created by two fish touching tails}
+		\caption{V-shape created by two zebrafish touching tails}
 		\label{fig:v-shape}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.47\textwidth}
@@ -87,14 +87,14 @@ Two fish touching is done in all kinds of positions and angles. When touching en
 		\caption{T-shape example}
 		\label{fig:t-shape}
 	\end{subfigure}
-\caption{Examples of T- and V-shape}
+\caption{Examples of V- and T-shape}
 \label{fig:TandV}
 \end{figure}
 
 \subsection{Above and Below}
-More complex occlusions often happen when one fish is above the other. The water depth of the aquarium affect this, as the fish are more likely to swim above each other if the water depth allows for it. There is mainly two different occlusions happening in this instance; two fish creating a cross or one fish almost completely occluding the other.
+More complex occlusions often happen when one zebrafish is above the other. The water depth of the aquarium affect this as the zebrafish are more likely to swim above each other if the water depth allows for it. There is mainly two different occlusions happening in this instance; two zebrafish creating a cross or one zebrafish almost completely occluding the other.
 
-The crossing can happen in multiple angles. A crossing occlusion is defined as two fish creating an X-shape. Examples of different crosses are shown in \autoref{fig:cross}. 
+The crossing can happen in multiple angles. A crossing occlusion is defined as two zebrafish creating an X-shape. Examples of different crosses are shown in \autoref{fig:cross}. 
 
 \autoref{fig:crossWide} shows a crossing occlusion, which is close to being an \textit{on-top} occlusion, but will be defined as a cross due to the head and tails being separated.
 
@@ -119,21 +119,21 @@ The crossing can happen in multiple angles. A crossing occlusion is defined as t
 	\label{fig:cross}
 \end{figure}
 
-The on-top occlusions is when one fish is somewhat straight on top of another fish. This kind of occlusions can at times be a shorter kind of elongation e.g. when the head of the top fish is further in on the body of the bottom fish. Examples of op-top occlusion are shown in \autoref{fig:onTop}.
+The on-top occlusions is when one zebrafish is somewhat straight on top of another zebrafish. This kind of occlusions can, at times, be a shorter kind of elongation e.g. when the head of the top zebrafish is further in on the body of the bottom zebrafish. Examples of op-top occlusion are shown in \autoref{fig:onTop}.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.47\textwidth}
 		\includegraphics[width=\textwidth]{onTop}
-		\caption{Straight on top occlusion}
+		\caption{Straight on top occlusion of two zebrafish}
 		\label{fig:onTopFull}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.47\textwidth}
 		\includegraphics[width=\textwidth]{onTopMid}
-		\caption{Head on top of middle of bottom fish}
+		\caption{Head on top of middle of bottom zebrafish}
 		\label{fig:onTopMid}
 	\end{subfigure}
-	\caption{On-top occlusions by two fish}
+	\caption{On-top occlusions by two zebrafish}
 	\label{fig:onTop}
 \end{figure}
 
@@ -161,31 +161,31 @@ Besides the five previously mentioned types of occlusions, several other occlusi
 	\label{fig:other}
 \end{figure}
 
-Occlusions occurring with all three fish are also categorised as other, as none of these fall into the defined categories, but are still occlusions.
+Occlusions occurring with all three zebrafish are also categorised as other, as none of these fall into the defined categories, but are still occlusions.
 
-The more fish included in an occlusion the higher the complexity of the occlusion is prone to be. This includes both the type occlusion occurring between each pair of the fish but also possible occlusions and crossings of multiple fish occurring at the same time. 
-At some occasions, a three fish occlusion is easily split into two different types of occlusions and all three fish are very distinguishable from one another, as in \autoref{fig:3f_EC}, but at other times three fish will stack upon each other as in \autoref{fig:3f_stack}.
+The more zebrafish included in an occlusion the higher the complexity of the occlusion is prone to be. This includes both the type of occlusion occurring between each pair of the zebrafish but also possible occlusions and crossings of multiple zebrafish occurring at the same time. 
+At some occasions, a three zebrafish occlusion is easily split into two different types of occlusions and all three zebrafish are very distinguishable from one another, as in \autoref{fig:3f_EC}, but at other times three zebrafish will stack upon each other as in \autoref{fig:3f_stack}.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[b]{0.47\textwidth}
 		\includegraphics[width=\textwidth]{3f_occl_EC}
-		\caption{Three fish in distinguishable occlusions}
+		\caption{Three zebrafish in distinguishable occlusions}
 		\label{fig:3f_EC}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.47\textwidth}
 		\includegraphics[width=\textwidth]{3f_stack}
-		\caption{Three fish in a stacking occlusion}
+		\caption{Three zebrafish in a stacking occlusion}
 		\label{fig:3f_stack}
 	\end{subfigure}
-	\caption{Occlusions amde by three fish}
+	\caption{Occlusions amde by three zebrafish}
 	\label{fig:3fish_occl}
 \end{figure}
 
-As can be seen in \autoref{fig:3fish_occl}, the occlusions occurring are either combinations of the occlusions with only two fish or the same time of occlusion multiple times. Due to this it is chosen to focus on the occlusions occurring between two fish and prove feasibility of this to be able to, later, expand a solution to handle occlusions with more than two fish.\todo{Bør der være en segmenteret figur, der viser flere typer okklusioner, eller den ovenover nok? Skal den evt erstattes af en segmenteret?}
+As can be seen in \autoref{fig:3fish_occl}, the occlusions occurring are either combinations of the occlusions with only two zebrafish or the same type of occlusion multiple times. Due to this it is chosen to focus on the occlusions occurring between two zebrafish and prove feasibility of this to be able to, later, expand a solution to handle occlusions with more than two zebrafish.
 
 \section{Occlusion Frequency}
-In the data set provided by Loligo.. the occlusions happen with different frequencies. The frequencies are displayed in a bar chart in \autoref{fig:occlFreq}.
+In the data set the occlusions happen with different frequencies. The frequencies are displayed in a bar chart in \autoref{fig:occlFreq}.
 
 \begin{figure}[H]
 	\centering
@@ -194,4 +194,4 @@ In the data set provided by Loligo.. the occlusions happen with different freque
 	\label{fig:occlFreq}
 \end{figure}
 
-\autoref{fig:occlFreq} shows that elongation is the most frequently occurring occlusion, together with the T-shape and other types of occlusions. In total $ 411 $ occlusions occur out of $ 3000 $ frames, which is $13.7\%$.
+\autoref{fig:occlFreq} shows that elongation is the most frequently occurring occlusion, together with the T-shape and other types of occlusions. In total $ 411 $ occlusions occur out of $ 3000 $ frames, which is a frequency of $13.7\%$.

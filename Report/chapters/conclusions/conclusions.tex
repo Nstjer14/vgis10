@@ -1,12 +1,12 @@
 \chapter{Conclusion}\label{ch:conclusion}\glsresetall
-Throughout the project, the work has been aimed at finding an answer to the problem statement:
+Throughout the project, the aim has been to find a solution to the problem statement:
 
 \textit{How can a zebrafish occlusion detection solution be implemented in order to potentially optimise zebrafish tracking?}\\
 
-In order to be able to detect zebrafish occlusions two different solutions is made. To be able to cater to different occlusion handling approaches a more simple image classification occlusion detection was developed, as to enable a user to solve the occlusions occurring during a tracking process. 
+In order to be able to detect zebrafish occlusions two different solutions are made. To be able to cater to different occlusion handling approaches a simple image classification occlusion detection and a more complex multi-class object occlusion detection were developed. The simple image classification would require a user to solve occlusions in a tracking system. While the more complex object detection solution system will enable application of fit solutions based on the category automatically and thereby require no user interaction during tracking.\\
 
-If occlusions need solving before any tracking is done, an object detection is implemented to locate and classify the occlusions in an image.\\
+The image classification achieves a validation accuracy of $93\%$ when trained for 15 epochs, but shows a lot of instability which can indicate a coincidence. When training for longer, no convergence is achieved which may indicate the need of more data or tweaking of the hyper parameters.\\
 
-The image classification achieves a validation accuracy of $93\%$ when trained for 15 epochs, but shows a lot of instability which can point towards a "lucky hit". When training for longer, no convergence is achieved which may point towards the need of more data or tweaking of hyper parameters.\\
+The object detection achieves a \gls{map} of $66.8\%$, and is able to locate both occlusions and single zebrafish as \textit{no occlusion}. It is not able to detect all types of occlusions with some classes having a rather low average precision in testing indicating the need for more data to increase performance.\\
 
-The object detection achieves a \gls{map} of $66.8\%$, and is able to locate both occlusions and single zebrafish as \textit{no occlusion}. It is not able to detect all types of occlusions with some classes having a rather low average precision in testing pointing towards the need of more data to increase performance.
+The report proposes two different solutions on how a zebrafish occlusion detection solution can be made, and presents a novel categorisation of multiple zebrafish occlusions. The multi-class object detection also serves as a proof of concept for the implementation of this solution in a complete tracking system.
