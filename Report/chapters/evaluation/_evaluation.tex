@@ -1,1 +1,18 @@
-\chapter{Evaluation}
+\chapter{Evaluation}\todo{Discussion or Evaluation?}
+The evaluation is done in regards to the final networks created and how the design and results are able to answer the problem statement and the questions asked in the extension of the problem statement in \autoref{ch:prob_state}.
+
+In order to be able to answer these questions, data is collected and annotated to be able to train and test the solutions. The data is a 60 seconds long video of three zebrafish in an aquarium. The annotations made are bounding boxes, and are made up of seven different classes; Elongation, on top, T-shape, V-shape, Cross, Other, and no occlusion. The lack of occlusions is also annotated in an effort to let the model detect all occurrences in the aquarium, and being able to separate occlusions and non-occlusions. 
+
+According to \cite{Dolado2014} different types of occlusions may require different kinds of computer vision methods and chose to split occlusions into two groups. This report splits the occlusions further into six different categories, in an effort to be able to differentiate between categories as much as possible, should the categories require different methods to separate the fish in the data.
+
+The different categories would only be necessary if a complete tracking solution aims to solve the occlusions automatically by applying solutions before tracking with solutions related to the category. Whereas if a tracking solution would aim to utilise the user, solely being able to detect an occlusion occurring in the image may suffice.\\
+
+In an effort to detect the occlusions in the video, two different solutions has been created. 
+
+The first is an image classification network, which is trained and tested on 400 images of the two classes; \textit{occlusions} and \textit{no occlusions}. The results presented are created training for 15 and 100 epochs separately. As the graphs show in \autoref{fig:img_acc-100}, especially testing is unstable, as the accuracy fluctuates between $0.75$ up to almost $1.0$ and it does not show any sign of converging. This instability can be caused by multiple issues; as both lack of data, learning-rate, and bad hyper parameters. An attempt to fix this was to add two dropout layers between the \gls{fc} layers, but to no avail. Lowering the depth of the \gls{fc} introduced some stability, but not anything noteworthy.
+
+The second is an object detection solution utilising a Faster \gls{rcnn} implementation, using the \gls{rpn} to generate region proposals and VGG16 network for extracting features. With a \gls{map} of $66.8\%$ there is clearly room for improvement. This is also shown in the predictions in testing, neither all occlusions nor the "no occlusions" are detected with a confidence above $70\%$. In \autoref{fig:not-det} the \textit{crossing} occlusion is not detected. This can be due to the shape the two fish make is also close to an \textit{on top} occlusion.
+
+To improve precision, the first step would be to increase the data volume. As shown in \autoref{fig:occlFreq} there is not even 40 occurrences of the \textit{on top} occlusions in the data, which may be a reason for the model not being able to detect this with a high enough certainty.
+
+The training plots also show some instability, which once again can be caused by the low amount of data.\\
